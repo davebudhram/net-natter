@@ -24,9 +24,10 @@ Net Natter is a place for NBA fans to view past game scores and stats, comment o
     # Run the app
     nodemon src/app.ts
     ```
-    - If you get an error with express in src/app.ts run 
+    - If you get an error with express and/or cors in src/app.ts run 
       ```bash
       npm i --save-dev @types/express
+      npm i --save-dev @types/cors
       ```
 3. Running the Frontend
     ```bash
