@@ -1,19 +1,22 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "server for pretzelplots",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/app.ts"
   },
-  "author": "Dave Budhram",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3"
+  },
   "dependencies": {
-    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^8.0.2"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21"
   }
 }

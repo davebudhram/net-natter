@@ -8,19 +8,29 @@ Net Natter is a place for NBA fans to view past game scores and stats, comment o
 
 ### Setup
 1. **Clone the repository**
-  ```bash
-   git clone https://github.com/davebudhram/net-natter.git
-   cd net-natter
-   ```
+    ```bash
+    git clone https://github.com/davebudhram/net-natter.git
+    cd net-natter
+    ```
 2. Running the Backend
-  ```bash
-  cd server
-  npm install
-  nodemon app.ts
-  ```
+
+    ```bash
+    # Install nodemon if you don't have it
+    npm  install  nodemon  -g
+
+    cd server
+    # Install dependencies
+    npm install
+    # Run the app
+    nodemon src/app.ts
+    ```
+    - If you get an error with express in src/app.ts run 
+      ```bash
+      npm i --save-dev @types/express
+      ```
 3. Running the Frontend
-  ```bash
-  cd client
-  npm install
-  npm start
-  ```
+    ```bash
+    cd client
+    npm install
+    npm start
+    ```
