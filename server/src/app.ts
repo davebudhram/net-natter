@@ -1,9 +1,35 @@
 import express, {Request, Response} from 'express';
+import session from "express-session";
 import mongoose from 'mongoose';
+import cors from "cors";
 import "dotenv/config";
+import { IUser } from './models/user/user';
+
+declare module 'express-session' {
+  interface SessionData {
+    currentUser: IUser | null;
+  }
+}
+
 
 // Create a new express app instance
 const app = express();
+
+const sessionOptions = {
+  secret: "any string",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {},
+  proxy: true,
+};
+if (process.env.NODE_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+  };
+}
+app.use(session(sessionOptions));
 const port = 4000;
 
 // Connect to MongoDB
@@ -20,8 +46,12 @@ catch (error) {
 
 
 app.get('/hello', (req: Request, res: Response) => {
+  const currentUser = req.session['currentUser'] as IUser | null;
+  req.session['currentUser'] = currentUser;
+  console.log(currentUser);
     res.send('Hello World!');
 });
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
