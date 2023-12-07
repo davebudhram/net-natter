@@ -1,6 +1,16 @@
 // userDao.ts
 import UserModel, { IUser } from './user';
 
+interface IUserDTO {
+  fullName: string;
+  email: string;
+  password: string;
+  role: 'ANALYST' | 'ADMIN' | 'USER';
+  favoriteTeamID?: number;
+  goatID?: number; 
+}
+
+
 class UserDao {
   static async getAllUsers(): Promise<IUser[]> {
     try {
@@ -20,12 +30,12 @@ class UserDao {
     }
   }
 
-  static async createUser(userData: IUser): Promise<IUser> {
+  static async createUser(userData: IUserDTO): Promise<IUser> {
     try {
       const newUser = await UserModel.create(userData);
       return newUser;
     } catch (error) {
-      throw new Error('Error creating user in the database');
+      throw error;
     }
   }
 
