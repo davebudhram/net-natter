@@ -1,14 +1,8 @@
 import mongoose from "mongoose";
-
-export interface IGameComment{
-  userId: mongoose.Schema.Types.ObjectId;
-  gameId: number;
-  commentText: string;
-  date: Date;
-}
+import { IGameCommentDTO } from "../../interfaces/gameComment";
 
 // Define the user schema
-const gameCommentSchema = new mongoose.Schema<IGameComment>({
+const gameCommentSchema = new mongoose.Schema<IGameCommentDTO>({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   gameId: { type: Number, required: true },
   commentText: String,
