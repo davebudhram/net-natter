@@ -4,7 +4,11 @@ import mongoose from 'mongoose';
 import cors from "cors";
 import "dotenv/config";
 import { IUser } from './models/user/user';
+<<<<<<< HEAD
 import UserRoutes from './routes/userRoutes';
+=======
+import GameCommentRoutes from './routes/gameCommentRoutes';
+>>>>>>> 2df1182 (Finish Game Comment Routes)
 
 declare module 'express-session' {
   interface SessionData {
@@ -55,7 +59,11 @@ app.get('/hello', (req: Request, res: Response) => {
 });
 
 app.use(express.json()); 
+<<<<<<< HEAD
 UserRoutes(app);
+=======
+GameCommentRoutes(app);
+>>>>>>> 2df1182 (Finish Game Comment Routes)
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
