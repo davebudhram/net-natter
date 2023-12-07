@@ -30,7 +30,7 @@ if (process.env.NODE_ENV !== "development") {
   };
 }
 app.use(session(sessionOptions));
-const port = 4000;
+
 
 // Connect to MongoDB
 const CONNECTION_STRING: string = process.env.DB_CONNECTION_STRING || '';
@@ -53,6 +53,7 @@ app.get('/hello', (req: Request, res: Response) => {
 });
 
 
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
