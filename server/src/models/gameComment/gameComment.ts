@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IGameComment{
-  userID: string;
+  userID: mongoose.Schema.Types.ObjectId;
   gameID: number;
   commentText: string;
   date: Date;
@@ -9,7 +9,7 @@ export interface IGameComment{
 
 // Define the user schema
 const gameCommentSchema = new mongoose.Schema<IGameComment>({
-  userID: { type: String, required: true },
+  userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   gameID: { type: Number, required: true },
   commentText: String,
   date: Date
@@ -17,6 +17,6 @@ const gameCommentSchema = new mongoose.Schema<IGameComment>({
   { collection: "gameComments" });
 
 // Create the user model
-const gameCommentModel = mongoose.model("gameComments", gameCommentSchema);
+const gameCommentModel = mongoose.model("GameComment", gameCommentSchema);
 
 export default gameCommentModel;
