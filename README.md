@@ -32,6 +32,7 @@ Net Natter is a place for NBA fans to view past game scores and stats, comment o
 3. Running the Frontend
     ```bash
     cd client
+    # Install dependencies
     npm install
     npm start
     ```
