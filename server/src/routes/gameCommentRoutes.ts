@@ -8,7 +8,11 @@ function GameCommentRoutes(app: Express) {
     app.get('/api/gameComments', async (req: Request, res: Response) => {
         await GameCommentController.getAllGameComments(req, res);
     });
-    // Get Game Comment by Game Comment ID
+    // Get Game Comment by Game Id
+    app.get('/api/gameComments/:gameId', async (req: Request, res: Response) => {
+        await GameCommentController.getGameCommentsByGameId(req, res);
+    });
+    // Get Game Comment by Game Comment Id
     app.get('/api/gameComments/:gameCommentId', async (req: Request, res: Response) => {
         await GameCommentController.getGameCommentById(req, res);
     });

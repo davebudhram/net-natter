@@ -11,6 +11,15 @@ class GameCommentDao {
     }
   }
 
+  static async getGameCommentsByGameId(gameId: number): Promise<IGameComment[] | null> {
+    try {
+      const gameComments = await GameCommentModel.find({gameId: gameId}).exec();
+      return gameComments;
+    } catch (error) {
+      throw new Error('Error fetching Game Comments by game id from the database');
+    }
+  }
+
   static async getGameCommentById(gameCommentId: string): Promise<IGameComment | null> {
     try {
       const gameComment = await GameCommentModel.findById(gameCommentId);

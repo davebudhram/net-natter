@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
 export interface IGameComment{
-  userID: mongoose.Schema.Types.ObjectId;
-  gameID: number;
+  userId: mongoose.Schema.Types.ObjectId;
+  gameId: number;
   commentText: string;
   date: Date;
 }
 
 // Define the user schema
 const gameCommentSchema = new mongoose.Schema<IGameComment>({
-  userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  gameID: { type: Number, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  gameId: { type: Number, required: true },
   commentText: String,
   date: Date
 },

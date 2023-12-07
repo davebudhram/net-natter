@@ -12,6 +12,16 @@ class GameCommentController {
     }
   }
 
+  static async getGameCommentsByGameId(req: Request, res: Response): Promise<void> {
+    try {
+      const { gameId } = req.params;
+      const gameComments = await GameCommentDao.getGameCommentsByGameId(parseInt(gameId));
+      res.json(gameComments);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
   static async getGameCommentById(req: Request, res: Response): Promise<void> {
     try {
       const { gameCommentId } = req.params;
