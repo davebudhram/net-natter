@@ -5,6 +5,7 @@ import cors from "cors";
 import "dotenv/config";
 import { IUser } from './models/user/user';
 import UserRoutes from './routes/userRoutes';
+import GameCommentRoutes from './routes/gameCommentRoutes';
 
 declare module 'express-session' {
   interface SessionData {
@@ -55,7 +56,9 @@ app.get('/hello', (req: Request, res: Response) => {
 });
 
 app.use(express.json()); 
+
 UserRoutes(app);
+GameCommentRoutes(app);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {

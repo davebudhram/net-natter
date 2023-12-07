@@ -6,7 +6,7 @@ export interface IUser{
   password: string;
   role: 'ANALYST' | 'ADMIN' | 'USER';
   favoriteTeamID?: number;
-  goatID?: number; 
+  goatID?: number;
 }
 
 // Define the user schema
