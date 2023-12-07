@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from "cors";
 import "dotenv/config";
 import { IUser } from './models/user/user';
+import UserRoutes from './routes/userRoutes';
 
 declare module 'express-session' {
   interface SessionData {
@@ -49,9 +50,12 @@ app.get('/hello', (req: Request, res: Response) => {
   const currentUser = req.session['currentUser'] as IUser | null;
   req.session['currentUser'] = currentUser;
   console.log(currentUser);
+  console.log(req.body)
     res.send('Hello World!');
 });
 
+app.use(express.json()); 
+UserRoutes(app);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {

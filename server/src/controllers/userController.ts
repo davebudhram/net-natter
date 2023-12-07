@@ -31,7 +31,7 @@ class UserController {
       const newUser = await UserDao.createUser(req.body);
       res.status(201).json(newUser);
     } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
