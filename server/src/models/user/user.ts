@@ -7,7 +7,6 @@ export interface IUser{
   role: 'ANALYST' | 'ADMIN' | 'USER';
   favoriteTeamID?: number;
   goatID?: number;
-  gameComments?: Array<mongoose.Types.ObjectId>;
 }
 
 // Define the user schema
@@ -21,8 +20,7 @@ const userSchema = new mongoose.Schema<IUser>({
     default: "USER"
   },
   favoriteTeamID: { type: Number, required: false},
-  goatID: { type: Number, required: false},
-  gameComments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GameComment' }]
+  goatID: { type: Number, required: false}
 },
   { collection: "users" });
 
