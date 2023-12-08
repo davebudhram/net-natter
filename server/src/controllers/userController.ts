@@ -62,10 +62,40 @@ class UserController {
     }
   }
 
+  static async getAllFollowers(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId } = req.params;
+      const followers = await UserDao.getAllFollowers(userId);
+      res.status(200).json(followers);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  static async getAllFollowees(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId } = req.params;
+      const followees = await UserDao.getAllFollowees(userId);
+      res.status(200).json(followees);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
   static async addUserToFollowers(req: Request, res: Response): Promise<void> {
     try {
-      const { analystId, userId } = req.params;
-      await UserDao.addUserToFollowers(analystId, userId);
+      const { followerId, followeeId } = req.params;
+      await UserDao.addUserToFollowers(followerId, followeeId);
+      res.status(200).json({ message: 'User added to followers successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  static async removeUserFromFollowers(req: Request, res: Response): Promise<void> {
+    try {
+      const { followerId, followeeId } = req.params;
+      await UserDao.removeUserFromFollowers(followerId, followeeId);
       res.status(200).json({ message: 'User added to followers successfully' });
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
