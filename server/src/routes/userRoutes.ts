@@ -6,29 +6,23 @@ import UserController from "../controllers/userController";
 function UserRoutes(app: Express) {
 
     // Get All Users 
-    app.get('/api/users', async (req: Request, res: Response) => {
-        await UserController.getAllUsers(req, res);
-    });
+    app.get('/api/users', UserController.getAllUsers);
     // Get User by User ID
-    app.get('/api/users/:userId', async (req: Request, res: Response) => {
-        await UserController.getUserById(req, res);
-    });
+    app.get('/api/users/:userId', UserController.getUserById);
     // Create Users
-    app.post('/api/users', async (req: Request, res: Response) => {
-        await UserController.createUser(req, res);
-    });
+    app.post('/api/users', UserController.createUser); 
     // Update User
-    app.put('/api/users/:userId', async (req: Request, res: Response) => {
-        await UserController.updateUser(req, res);
-    });
+    app.put('/api/users/:userId', UserController.updateUser); 
     // Delete User
-    app.delete('/api/users/:userId', async (req: Request, res: Response) => {
-        await UserController.deleteUser(req, res);
-    });
-    // Add User to User Followers
-    app.put('/api/users/:analystId/:userId', async (req: Request, res: Response) => {
-        await UserController.addUserToFollowers(req, res);
-    });
+    app.delete('/api/users/:userId', UserController.deleteUser); 
+    // Get Followers by User ID
+    app.get('/api/users/followers/:userId', UserController.getAllFollowers);
+    // Get Followees by User ID
+    app.get('/api/users/followings/:userId', UserController.getAllFollowees);
+    // Add the followee to the follower
+    app.put('/api/users/follow/:followerId/:followeeId', UserController.addUserToFollowers);
+    // Remove the followee from the follower
+    app.put('/api/users/unfollow/:followerId/:followeeId', UserController.removeUserFromFollowers);
 }
 
 export default UserRoutes;

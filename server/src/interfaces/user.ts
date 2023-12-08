@@ -8,7 +8,7 @@ export interface IUserDTO{
     favoriteTeamID?: number;
     goatID?: number;
     followers?: string[];
-    likedPlayers?: number[];
+    followings?: string[];
 }
 
 export interface IUser extends mongoose.Document, IUserDTO{

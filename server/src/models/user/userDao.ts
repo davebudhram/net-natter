@@ -47,13 +47,47 @@ class UserDao {
     }
   }
 
-  static async addUserToFollowers(analystId: string, userId: string): Promise<void> {
+  static async getAllFollowers(userId: string): Promise<String[]> {
     try {
       const user = await UserModel.findById(userId);
       if (user) {
+        const followers = user.followers || [];
+        return followers;
+      } else {
+        throw new Error('Error finding user in database');
+      }
+    } catch (error) {
+      throw new Error('Error fetching userPlayerLikes from the database');
+    }
+  }
+
+  static async getAllFollowees(userId: string): Promise<String[]> {
+    try {
+      const user = await UserModel.findById(userId);
+      if (user) {
+        const followees = user.followings || [];
+        return followees;
+      } else {
+        throw new Error('Error finding user in database');
+      }
+    } catch (error) {
+      throw new Error('Error fetching userPlayerLikes from the database');
+    }
+  }
+
+  static async addUserToFollowers(followerId: string, followeeId: string): Promise<void> {
+    try {
+      const follower = await UserModel.findById(followerId);
+      const followee = await UserModel.findById(followeeId);
+      if (follower && followee) {
         await UserModel.findByIdAndUpdate(
-          analystId, 
-          { $push: { followers: userId } },
+          followerId, 
+          { $push: { followers: followeeId } },
+          { new: true }
+        );
+        await UserModel.findByIdAndUpdate(
+          followeeId, 
+          { $push: { followings: followerId } },
           { new: true }
         );
       } else {
@@ -61,6 +95,29 @@ class UserDao {
       }
     } catch (error) {
       throw new Error('Error adding user to analyst followers');
+    }
+  }
+
+  static async removeUserFromFollowers(followerId: string, followeeId: string): Promise<void> {
+    try {
+      const follower = await UserModel.findById(followerId);
+      const followee = await UserModel.findById(followeeId);
+      if (follower && followee) {
+        await UserModel.findByIdAndUpdate(
+          followerId, 
+          { $pull: { followers: followeeId } },
+          { new: true }
+        );
+        await UserModel.findByIdAndUpdate(
+          followeeId, 
+          { $pull: { followings: followerId } },
+          { new: true }
+        );
+      } else {
+        throw new Error('Error removing fake user to analyst followers');
+      }
+    } catch (error) {
+      throw new Error('Error removing user to analyst followers');
     }
   }
 }

@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema<IUserDTO>({
   favoriteTeamID: { type: Number, required: false},
   goatID: { type: Number, required: false},
   followers: { type: [String], required: false }, 
-  likedPlayers: { type: [Number], required: false },
+  followings: { type: [String], required: false },
 },
   { collection: "users" });
 
