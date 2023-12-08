@@ -36,6 +36,10 @@ class UserPlayerLikeDao {
 
   static async createUserPlayerLike(userPlayerData: IUserPlayerLikeDTO): Promise<void> {
     try {
+      const data = await userPlayerLikeModel.findOneAndDelete({ userId: userPlayerData.userId, playerId: userPlayerData.playerId}).exec();
+      if (data) {
+        throw new Error('User player like already exists');
+      }
       await userPlayerLikeModel.create(userPlayerData);
     } catch (error) {
       throw Error('Error creating article in the database');
