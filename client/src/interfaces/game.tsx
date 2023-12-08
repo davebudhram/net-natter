@@ -1,15 +1,18 @@
-import { IGameStats, IPlayerStats } from "./stats";
-
 export interface IGame {
     _id: number,
-    date: Date,
+    startTime: Date,
     arena: string,
     homeTeamId: number,
     awayTeamId: number,
-    quarter: number, 
-    status: 'Not Started' | 'live' | 'Finished';
+    homeTeamName: string,
+    awayTeamName: string,
     homeTeamScore: number,
     awayTeamScore: number,
-    gameStats: IGameStats,
-    playerStats: IPlayerStats[],
+    homeTeamCode: string,
+    awayTeamCode: string,
+    homeLogo: string,
+    awayLogo: string,
+    quarter: number, 
+    status: 'Not Started' | 'live' | 'Finished';
+    duration: string,
 }
