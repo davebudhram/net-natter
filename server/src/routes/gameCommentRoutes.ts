@@ -5,29 +5,22 @@ import GameCommentController from "../controllers/gameCommentController";
 function GameCommentRoutes(app: Express) {
 
     // Get All Game Comment
-    app.get('/api/gameComments', async (req: Request, res: Response) => {
-        await GameCommentController.getAllGameComments(req, res);
-    });
+    app.get('/api/gameComments', GameCommentController.getAllGameComments);
+
     // Get Game Comment by Game Id
-    app.get('/api/gameComments/:gameId', async (req: Request, res: Response) => {
-        await GameCommentController.getGameCommentsByGameId(req, res);
-    });
+    app.get('/api/gameComments/:gameId', GameCommentController.getGameCommentsByGameId); 
+
     // Get Game Comment by Game Comment Id
-    app.get('/api/gameComments/:gameCommentId', async (req: Request, res: Response) => {
-        await GameCommentController.getGameCommentById(req, res);
-    });
+    app.get('/api/gameComments/:gameCommentId', GameCommentController.getGameCommentById); 
+
     // Create Game Comments
-    app.post('/api/gameComments', async (req: Request, res: Response) => {
-        await GameCommentController.createGameComment(req, res);
-    });
+    app.post('/api/gameComments', GameCommentController.createGameComment);
+
     // Update Game Comment
-    app.put('/api/gameComments/:gameCommentId', async (req: Request, res: Response) => {
-        await GameCommentController.updateGameComment(req, res);
-    });
+    app.put('/api/gameComments/:gameCommentId', GameCommentController.updateGameComment);
+    
     // Delete Game Comment
-    app.delete('/api/gameComments/:gameCommentId', async (req: Request, res: Response) => {
-        await GameCommentController.deleteGameComment(req, res);
-    });
+    app.delete('/api/gameComments/:gameCommentId', GameCommentController.deleteGameComment); 
 }
 
 export default GameCommentRoutes;

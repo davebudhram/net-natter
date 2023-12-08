@@ -120,6 +120,24 @@ class UserDao {
       throw new Error('Error removing user to analyst followers');
     }
   }
+
+  static async userSignUp(userData: IUserDTO): Promise<IUser> {
+    try {
+      const newUser = await UserModel.create(userData);
+      return newUser;
+    } catch (error) {
+      throw new Error('Error creating user');
+    }
+  }
+
+  static async userSignIn(username: string, password: string): Promise<IUser | null> {
+    try {
+      const signedUser = await UserModel.findOne({ username, password }).exec();
+      return signedUser;
+    } catch (error) {
+      throw new Error('Error creating user');
+    }
+  }
 }
 
 export default UserDao;
