@@ -7,6 +7,8 @@ export interface IUserDTO{
     role: 'ANALYST' | 'ADMIN' | 'USER';
     favoriteTeamID?: number;
     goatID?: number;
+    followers?: string[];
+    likedPlayers?: number[];
 }
 
 export interface IUser extends mongoose.Document, IUserDTO{

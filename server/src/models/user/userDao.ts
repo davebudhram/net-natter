@@ -1,5 +1,6 @@
 // userDao.ts
-import UserModel, { IUser } from './user';
+import UserModel from './user';
+import { IUser, IUserDTO } from '../../interfaces/user';
 
 class UserDao {
   static async getAllUsers(): Promise<IUser[]> {
@@ -20,7 +21,7 @@ class UserDao {
     }
   }
 
-  static async createUser(userData: IUser): Promise<IUser> {
+  static async createUser(userData: IUserDTO): Promise<IUser> {
     try {
       const newUser = await UserModel.create(userData);
       return newUser;
@@ -29,7 +30,7 @@ class UserDao {
     }
   }
 
-  static async updateUser(userId: string, updatedUserData: Partial<IUser>): Promise<IUser | null> {
+  static async updateUser(userId: string, updatedUserData: Partial<IUserDTO>): Promise<IUser | null> {
     try {
       const updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUserData, { new: true });
       return updatedUser;
@@ -43,6 +44,18 @@ class UserDao {
       await UserModel.findByIdAndDelete(userId);
     } catch (error) {
       throw new Error('Error deleting user from the database');
+    }
+  }
+
+  static async addUserToFollowers(analystId: string, userId: string): Promise<void> {
+    try {
+      await UserModel.findByIdAndUpdate(
+        analystId, 
+        { $push: { followers: userId } },
+        { new: true }
+      );
+    } catch (error) {
+      throw new Error('Error adding user');
     }
   }
 }

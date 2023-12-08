@@ -3,7 +3,7 @@ import session from "express-session";
 import mongoose from 'mongoose';
 import cors from "cors";
 import "dotenv/config";
-import { IUser } from './models/user/user';
+import { IUser } from './interfaces/user';
 import UserRoutes from './routes/userRoutes';
 import GameCommentRoutes from './routes/gameCommentRoutes';
 import AnalystArticleRoutes from './routes/analystArticleRoutes';

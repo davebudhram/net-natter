@@ -1,5 +1,6 @@
 // gameCommentDao.ts
-import GameCommentModel, { IGameComment } from './gameComment';
+import GameCommentModel from './gameComment';
+import { IGameComment, IGameCommentDTO } from '../../interfaces/gameComment';
 
 class GameCommentDao {
   static async getAllGameComments(): Promise<IGameComment[]> {
@@ -29,7 +30,7 @@ class GameCommentDao {
     }
   }
 
-  static async createGameComment(gameCommentData: IGameComment): Promise<IGameComment> {
+  static async createGameComment(gameCommentData: IGameCommentDTO): Promise<IGameComment> {
     try {
       const newGameComment = await GameCommentModel.create(gameCommentData);
       return newGameComment;
@@ -38,7 +39,7 @@ class GameCommentDao {
     }
   }
 
-  static async updateGameComment(gameCommentId: string, updatedGameCommentData: Partial<IGameComment>): Promise<IGameComment | null> {
+  static async updateGameComment(gameCommentId: string, updatedGameCommentData: Partial<IGameCommentDTO>): Promise<IGameComment | null> {
     try {
       const updatedGameComment = await GameCommentModel.findByIdAndUpdate(gameCommentId, updatedGameCommentData, { new: true });
       return updatedGameComment;

@@ -25,6 +25,10 @@ function UserRoutes(app: Express) {
     app.delete('/api/users/:userId', async (req: Request, res: Response) => {
         await UserController.deleteUser(req, res);
     });
+    // Add User to User Followers
+    app.put('/api/users/:analystId/:userId', async (req: Request, res: Response) => {
+        await UserController.addUserToFollowers(req, res);
+    });
 }
 
 export default UserRoutes;
