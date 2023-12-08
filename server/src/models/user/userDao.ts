@@ -49,13 +49,18 @@ class UserDao {
 
   static async addUserToFollowers(analystId: string, userId: string): Promise<void> {
     try {
-      await UserModel.findByIdAndUpdate(
-        analystId, 
-        { $push: { followers: userId } },
-        { new: true }
-      );
+      const user = await UserModel.findById(userId);
+      if (user) {
+        await UserModel.findByIdAndUpdate(
+          analystId, 
+          { $push: { followers: userId } },
+          { new: true }
+        );
+      } else {
+        throw new Error('Error adding fake user to analyst followers');
+      }
     } catch (error) {
-      throw new Error('Error adding user');
+      throw new Error('Error adding user to analyst followers');
     }
   }
 }
