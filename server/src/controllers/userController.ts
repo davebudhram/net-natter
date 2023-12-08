@@ -101,6 +101,47 @@ class UserController {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
+
+  static async userSignUp(req: Request, res:Response): Promise<void> {
+    try {
+      const user = await UserDao.userSignUp(req.body);
+      req.session.currentUser = user;
+      res.status(200).json({ message: 'User signed up successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  static async userSignIn(req: Request, res:Response): Promise<void> {
+    try {
+      const { username, password } = req.body;
+      const user = await UserDao.userSignIn(username, password);
+      req.session.currentUser = user;
+      res.status(200).json({ message: 'User signed in successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  static async userSignOut(req: Request, res:Response): Promise<void> {
+    try {
+      req.session.destroy;
+      res.status(200).json({ message: 'User signed out successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  static async userAccount(req: Request, res:Response): Promise<void> {
+    try {
+      if (req.session.currentUser === null) {
+        throw new Error('Current User does not exists');
+      }
+      res.status(200).json(req.session.currentUser);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
 }
 
 export default UserController;
