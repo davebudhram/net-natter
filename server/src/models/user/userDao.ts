@@ -47,23 +47,6 @@ class UserDao {
     }
   }
 
-  static async addUserToFollowers(followerId: string, followeeId: string): Promise<void> {
-    try {
-      const user = await UserModel.findById(followeeId);
-      if (user) {
-        await UserModel.findByIdAndUpdate(
-          followerId, 
-          { $push: { followers: followeeId } },
-          { new: true }
-        );
-      } else {
-        throw new Error('Error adding fake user to analyst followers');
-      }
-    } catch (error) {
-      throw new Error('Error adding user to analyst followers');
-    }
-  }
-
   static async getAllFollowers(userId: string): Promise<String[]> {
     try {
       const user = await UserModel.findById(userId);
@@ -92,13 +75,42 @@ class UserDao {
     }
   }
 
+  static async addUserToFollowers(followerId: string, followeeId: string): Promise<void> {
+    try {
+      const follower = await UserModel.findById(followerId);
+      const followee = await UserModel.findById(followeeId);
+      if (follower && followee) {
+        await UserModel.findByIdAndUpdate(
+          followerId, 
+          { $push: { followers: followeeId } },
+          { new: true }
+        );
+        await UserModel.findByIdAndUpdate(
+          followeeId, 
+          { $push: { followings: followerId } },
+          { new: true }
+        );
+      } else {
+        throw new Error('Error adding fake user to analyst followers');
+      }
+    } catch (error) {
+      throw new Error('Error adding user to analyst followers');
+    }
+  }
+
   static async removeUserFromFollowers(followerId: string, followeeId: string): Promise<void> {
     try {
-      const user = await UserModel.findById(followeeId);
-      if (user) {
+      const follower = await UserModel.findById(followerId);
+      const followee = await UserModel.findById(followeeId);
+      if (follower && followee) {
         await UserModel.findByIdAndUpdate(
           followerId, 
           { $pull: { followers: followeeId } },
+          { new: true }
+        );
+        await UserModel.findByIdAndUpdate(
+          followeeId, 
+          { $pull: { followings: followerId } },
           { new: true }
         );
       } else {
