@@ -1,16 +1,8 @@
 import mongoose from "mongoose";
-
-export interface IUser{
-  fullName: string;
-  email: string;
-  password: string;
-  role: 'ANALYST' | 'ADMIN' | 'USER';
-  favoriteTeamID?: number;
-  goatID?: number;
-}
+import { IUserDTO } from "../../interfaces/user";
 
 // Define the user schema
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new mongoose.Schema<IUserDTO>({
   fullName: { type: String, required: true },
   email: { type: String, required: true, unique:true },
   password: { type: String, required: true },
@@ -20,7 +12,9 @@ const userSchema = new mongoose.Schema<IUser>({
     default: "USER"
   },
   favoriteTeamID: { type: Number, required: false},
-  goatID: { type: Number, required: false}
+  goatID: { type: Number, required: false},
+  followers: { type: [String], required: false }, 
+  likedPlayers: { type: [Number], required: false },
 },
   { collection: "users" });
 

@@ -6,7 +6,7 @@ class UserController {
   static async getAllUsers(req: Request, res: Response): Promise<void> {
     try {
       const users = await UserDao.getAllUsers();
-      res.json(users);
+      res.status(200).json(users);
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -43,7 +43,7 @@ class UserController {
         const currentUser : any = await UserDao.getUserById(userId);
         req.session['currentUser'] = currentUser;
         
-        res.json(status);
+        res.status(204).json(status);
       } else {
         res.status(404).json({ error: 'User not found' });
       }
@@ -56,7 +56,17 @@ class UserController {
     try {
       const { userId } = req.params;
       await UserDao.deleteUser(userId);
-      res.json({ message: 'User deleted successfully' });
+      res.status(204).json({ message: 'User deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  static async addUserToFollowers(req: Request, res: Response): Promise<void> {
+    try {
+      const { analystId, userId } = req.params;
+      await UserDao.addUserToFollowers(analystId, userId);
+      res.status(200).json({ message: 'User added to followers successfully' });
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
