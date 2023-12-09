@@ -2,7 +2,6 @@ import axios from "axios";
 import { league, season, url, headers } from "./endpointTypes";
 import { ITeam } from "../interfaces/team";
 
-
 // Get All NBA Team Data
 const getTeamsData = async () => {
     const params = { "league": league, "season": season}
@@ -31,7 +30,5 @@ const getTeamsData = async () => {
         throw error;
     }
 };
-
-
 
 export { getTeamsData };
