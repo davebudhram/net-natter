@@ -18,7 +18,7 @@ export interface IGame {
 }
 
 export enum Status {
-    START = 'Not Started',
+    UPCOMING = 'Not Started',
     LIVE = 'live',
     FINISHED = 'Finished',
 }
