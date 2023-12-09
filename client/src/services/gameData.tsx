@@ -35,11 +35,24 @@ const getIndividualGameTeamData = async (teamId: number): Promise<IGame[]> => {
     }
 }
 
-// Get Live Game Data 
+// Get Game Data Based on if they are Live
 const getLiveGameData = async (): Promise<IGame[]> => {
-    // Date Fields for Manipulation
     try {
         const params = { "live": "all" }
+        const games = await parseGameData(params);
+        console.log(games);
+        return games;
+    } catch (error) {
+        console.error('Error fetching game stats:', error);
+        throw error;
+    }
+};
+
+// Get Game Data Based on Date
+const getDateGameData = async (): Promise<IGame[]> => {
+    try {
+        const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
+        const params = { "date": tomorrowDate }
         const games = await parseGameData(params);
         console.log(games);
         return games;
@@ -84,4 +97,4 @@ const parseGameData = async (params: any): Promise<IGame[]> => {
     }
 };
 
-export { getLiveGameData, getIndividualGameTeamData, getUpcomingGameData };
+export { getLiveGameData, getIndividualGameTeamData, getUpcomingGameData, getDateGameData };
