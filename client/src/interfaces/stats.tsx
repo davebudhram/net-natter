@@ -17,12 +17,17 @@ export interface IStats {
     blocks: number,
     fouls: number,
     plusMinus: string,
+    turnovers: number,
 }
 
 export interface IPlayerStats extends IStats {
     playerId: number,
+    firstName: string,
+    lastName: string,
+    teamId: number,
 }
 
-export interface IGameStats extends IStats {
+export interface IGameTeamStats extends IStats {
     gameId: number,
+    teamId: number,
 }
