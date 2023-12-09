@@ -2,7 +2,7 @@ import axios from "axios";
 import { league, season, url, headers } from "./endpointTypes";
 import { IPlayerStats, IGameTeamStats } from "../interfaces/stats";
 
-// Get All Players Stats
+// Get All Players Stats based on a given game
 const getPlayerStatsPerGameData = async (gameId: number): Promise<IPlayerStats[]> => {
     const params = { "game": gameId }
     try {
@@ -47,7 +47,8 @@ const getPlayerStatsPerGameData = async (gameId: number): Promise<IPlayerStats[]
     }
 };
 
-// Get All Game Stats
+// Get the two teams playing stats based on given ID
+// Return an array of two with the team's stats
 const getGameStatsData = async (gameId: number): Promise<IGameTeamStats[]> => {
     const params = { "id": gameId }
     try {
