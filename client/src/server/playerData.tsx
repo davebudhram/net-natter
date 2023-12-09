@@ -3,7 +3,7 @@ import { season, url, headers } from "./endpointTypes";
 import { IPlayer } from "../interfaces/player";
 
 // Get all players data based on Team ID
-const getPlayersData = async (teamId: number) => {
+const getPlayersData = async (teamId: number): Promise<IPlayer[]> => {
     const params = { "team": teamId, "season": season}
     try {
         const teamRawResponse = await axios.get(`${url}/players`, {
