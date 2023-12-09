@@ -7,8 +7,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
-import bootstrap from "bootstrap";
 import "./navbar.css";
 
 function Navbar() {
@@ -32,11 +30,17 @@ function Navbar() {
       </div>
       <div className='navbar-search'>
         <InputGroup>
-          <Form.Control aria-label='Text input with dropdown button' />
+          <input
+            type='text'
+            className='form-control'
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+          />
           <DropdownButton
             title={searchType}
             id='input-group-dropdown-2'
             align='end'
+            variant='light'
             onSelect={(eventKey) => {
               setSearchType(eventKey || "Team");
             }}
