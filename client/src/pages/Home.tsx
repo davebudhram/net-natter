@@ -1,7 +1,7 @@
 import React from "react";
-import { getPlayerStatsPerGameData, getGameStatsData } from "../server/statsData";
-import { getTeamsData } from "../server/teamData";
-import { getGameData } from "../server/gameData";
+import { getPlayerStatsPerGameData, getGameStatsData } from "../services/statsData";
+import { getTeamsData } from "../services/teamData";
+import { getGameData } from "../services/gameData";
 import { Status } from "../interfaces/game";
 
 function Home() {

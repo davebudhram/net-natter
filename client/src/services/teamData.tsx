@@ -2,7 +2,7 @@ import axios from "axios";
 import { league, season, url, headers } from "./endpointTypes";
 import { ITeam } from "../interfaces/team";
 
-// Get All NBA Team Data
+// Get every NBA team's stats 
 const getTeamsData = async (): Promise<ITeam[]> => {
     const params = { "league": league, "season": season}
     try {
