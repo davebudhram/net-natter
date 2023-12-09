@@ -19,10 +19,10 @@ function UserRoutes(app: Express) {
   app.delete("/api/users/:userId", UserController.deleteUser);
 
   // Get Followers by User ID
-  app.get("/api/users/:userId/followers", UserController.getAllFollowers);
+  app.get("/api/users/:userId/followerIds", UserController.getAllFollowers);
 
   // Get Followees by User ID
-  app.get("/api/users/:userId/followings", UserController.getAllFollowees);
+  app.get("/api/users/:userId/followeeIds", UserController.getAllFollowees);
 
   // Add the followee to the follower
   app.post(
@@ -47,6 +47,10 @@ function UserRoutes(app: Express) {
 
   // Get User Account
   app.get("/api/auth/account", UserController.userAccount);
+
+  app.get("/api/users/:userId/followers", UserController.getUserFollowers);
+
+  app.get("/api/users/:userId/followees", UserController.getUserFollowees);
 }
 
 export default UserRoutes;

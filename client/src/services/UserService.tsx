@@ -103,7 +103,29 @@ export const getSignedInUser = async (): Promise<IUser> => {
   }
 };
 
-export const getUserFollowers = async (userId: string): Promise<String[]> => {
+export const getUserFollowerIds = async (userId: string): Promise<String[]> => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_BASE}/users/${userId}/followerIds`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Trouble finding user followers");
+  }
+};
+
+export const getUserFolloweesId = async (userId: string): Promise<String[]> => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_BASE}/users/${userId}/followeeIds`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Trouble finding user following");
+  }
+};
+
+export const getUserFollowers = async (userId: string): Promise<IUser[]> => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_BASE}/users/${userId}/followers`
@@ -114,10 +136,10 @@ export const getUserFollowers = async (userId: string): Promise<String[]> => {
   }
 };
 
-export const getUserFollowing = async (userId: string): Promise<String[]> => {
+export const getUserFollowees = async (userId: string): Promise<IUser[]> => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_BASE}/users/${userId}/followings`
+      `${process.env.REACT_APP_API_BASE}/users/${userId}/followees`
     );
     return response.data;
   } catch (error) {
@@ -131,7 +153,7 @@ export const followUser = async (
 ): Promise<void> => {
   try {
     await axios.post(
-      `${process.env.REACT_APP_API_BASE}/users/${followerId}/${userId}`
+      `${process.env.REACT_APP_API_BASE}/users/follow/${followerId}/${userId}`
     );
   } catch (error) {
     throw new Error("Trouble following user");
@@ -144,7 +166,7 @@ export const unfollowUser = async (
 ): Promise<void> => {
   try {
     await axios.delete(
-      `${process.env.REACT_APP_API_BASE}/users/${followerId}/${userId}`
+      `${process.env.REACT_APP_API_BASE}/users/unfollow/${followerId}/${userId}`
     );
   } catch (error) {
     throw new Error("Trouble unfollowing user");
