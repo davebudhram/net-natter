@@ -19,13 +19,14 @@ const getPlayersData = async (teamId: number) => {
                 lastName: rawPlayer.lastname,
                 jerseyNumber: rawPlayer.leagues.standard.jersey,
                 position: rawPlayer.leagues.standard.pos,
-                teamId: rawPlayer.team.logo,
-                dob: rawPlayer.conference.rank,
+                teamId: teamId,
+                dob: rawPlayer.birth.date,
                 country: rawPlayer.birth.country,
                 height: rawPlayer.height.feets + "'" + rawPlayer.height.inches,
                 college: rawPlayer.college,
             };
         });
+        console.log(players);
         return players;
     } catch (error) {
         console.error('Error fetching standings:', error);
