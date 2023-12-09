@@ -17,12 +17,17 @@
 
 .navbar-search {
   margin-left: 200px;
-  border: 1px solid black;
   text-wrap: nowrap;
 }
 
 .navbar-account {
-  margin-left: 500px;
-  margin-right: 100px;
+  margin-left: 200px;
   border: 1px solid black;
+  background-color: #ffc000;
+  color: #ffc000;
+}
+
+.navbar-search-dropdown {
+  background-color: #ffc000;
+  color: #ffc000;
 }
