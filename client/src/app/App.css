@@ -5,3 +5,8 @@
 .blue-background {
   background-color: #0681d8;
 }
+
+.page {
+  margin-left: 100px;
+  margin-right: 100px;
+}

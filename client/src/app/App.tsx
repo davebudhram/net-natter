@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import AppRouter from "./Router";
+import AppRouter from "../Router";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
