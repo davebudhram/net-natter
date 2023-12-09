@@ -3,7 +3,7 @@ import GameCard from "../../components/gameCard/gameCard";
 import {IGame} from "../../interfaces/game";
 import "./Home.css";
 
-import { getUpcomingGameData } from "../../services/gameData";
+import { getDateGameData } from "../../services/gameData";
 
 function Home() {
   const [liveGames, setLiveGames] = useState<IGame[]>([]);
@@ -19,7 +19,7 @@ function Home() {
             <GameCard game={game} />
           </div>
         ))}
-        <button onClick={async () => await getUpcomingGameData()}> TEST </button>
+        <button onClick={async () => await getDateGameData()}> TEST </button>
       </div>
       <button className='btn btn-secondary'>Press me!</button>
     </div>
