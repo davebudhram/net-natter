@@ -24,6 +24,7 @@ const getTeamsData = async (): Promise<ITeam[]> => {
                 losses: rawTeam.conference.loss,
             };
         });
+        console.log(teams);
         return teams;
     } catch (error) {
         console.error('Error fetching standings:', error);
