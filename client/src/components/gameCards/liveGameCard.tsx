@@ -63,7 +63,7 @@ function LiveGameCard(props: GameCardProps) {
       )}
       {(game.status === "Scheduled" || game.status === "Finished") && (
         <div className='text-center mt-2 mb-2'>
-          {game.startTime.toLocaleString()}
+          {game.startTime.toLocaleString().replace(/,/g, " -")}
         </div>
       )}
 

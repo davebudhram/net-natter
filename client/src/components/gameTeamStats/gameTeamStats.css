@@ -1,0 +1,15 @@
+.team-stats {
+  width: 400px;
+  height: auto;
+  border-radius: 10px;
+  background-color: #990011;
+}
+.team-stats-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.team-stats-col {
+  display: flex;
+  flex-direction: column;
+}
