@@ -9,6 +9,7 @@ import Player from "./pages/Player";
 import Team from "./pages/Team";
 import Article from "./pages/Article";
 import Search from "./pages/Search";
+import Welcome from "./pages/Welcome/Welcome";
 
 function AppRouter() {
   return (
@@ -17,13 +18,15 @@ function AppRouter() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
-        <Route path='/signup' element={<Signinup />} />
-        <Route path='/signin' element={<Signinup />} />
+        <Route path='/signup' element={<Welcome />} />
+        <Route path='/signin' element={<Welcome />} />
+        <Route path='/welcome' element={<Welcome />} />
         <Route path='/account/:accountId' element={<Account />} />
         <Route path='/game/:gameId' element={<Game />} />
         <Route path='/player/:playerId' element={<Player />} />
         <Route path='/team/:teamId' element={<Team />} />
         <Route path='/article/:articleId' element={<Article />} />
+        <Route path='/search' element={<Search />} />
         <Route path='/search/:searchType/:searchText' element={<Search />} />
 
         <Route path='*' element={<h1>Not Found</h1>} />

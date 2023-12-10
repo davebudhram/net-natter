@@ -1,9 +1,14 @@
 .navbar {
   border-bottom: 1px solid #e3e3e3;
+  min-width: 500px;
+  width: 100%;
   height: 120px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: fixed;
+  z-index: 100;
+  text-wrap: nowrap;
 }
 
 .navbar-home {
@@ -30,4 +35,17 @@
 .navbar-search-dropdown {
   background-color: #ffc000;
   color: #ffc000;
+}
+
+.navbar-search-icon-box {
+  background-color: white;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.margin-right-100 {
+  margin-right: 100px;
 }

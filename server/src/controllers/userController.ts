@@ -108,7 +108,6 @@ class UserController {
   static async userSignUp(req: Request, res: Response): Promise<void> {
     try {
       const user = await UserDao.userSignUp(req.body);
-      req.session.currentUser = user;
       res.status(200).json({message: "User signed up successfully"});
     } catch (error) {
       res.status(500).json({error: "Internal Server Error"});
@@ -119,8 +118,7 @@ class UserController {
     try {
       const {username, password} = req.body;
       const user = await UserDao.userSignIn(username, password);
-      req.session.currentUser = user;
-      res.status(200).json({message: "User signed in successfully"});
+      res.status(200).json(user);
     } catch (error) {
       res.status(500).json({error: "Internal Server Error"});
     }
@@ -137,9 +135,12 @@ class UserController {
 
   static async userAccount(req: Request, res: Response): Promise<void> {
     try {
-      if (req.session.currentUser === null) {
+      if (req.session.currentUser === undefined) {
+        console.log("This not good");
         throw new Error("Current User does not exists");
       }
+      console.log("This is good");
+      console.log(req.session.currentUser);
       res.status(200).json(req.session.currentUser);
     } catch (error) {
       res.status(500).json({error: "Internal Server Error"});
