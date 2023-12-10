@@ -5,6 +5,7 @@ import LiveGameCard from "../../components/gameCards/liveGameCard";
 import "./Home.css";
 
 import {getDateGameData} from "../../services/gameData";
+import {getPlayerStatsPerGameData} from "../../services/statsData";
 
 const temp: IGame = {
   arena: "Smoothie King Center",
@@ -43,14 +44,12 @@ function Home() {
         <LiveGameCard game={temp} />
         <LiveGameCard game={temp} />
       </div>
-      {/* <div className='row'>
-        {liveGames.map((game) => (
-          <div className='col-sm-4'>
-            <GameCard game={game} />
-          </div>
-        ))}
-        <button onClick={async () => await getDateGameData()}> TEST </button>
-      </div> */}
+      <div className='row'>
+        <button onClick={async () => await getPlayerStatsPerGameData(8787)}>
+          {" "}
+          TEST{" "}
+        </button>
+      </div>
       <button className='btn btn-secondary'>Press me!</button>
     </div>
   );
