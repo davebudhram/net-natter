@@ -149,9 +149,13 @@ class UserDao {
   ): Promise<IUser | null> {
     try {
       const signedUser = await UserModel.findOne({username, password}).exec();
-      return signedUser;
+      if (signedUser) {
+        return signedUser;
+      } else {
+        throw new Error("Error signing in user");
+      }
     } catch (error) {
-      throw new Error("Error creating user");
+      throw new Error("Error signing user");
     }
   }
 

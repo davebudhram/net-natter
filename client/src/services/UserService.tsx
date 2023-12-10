@@ -1,13 +1,19 @@
 import axios from "axios";
 import {IUser, IUserDTO} from "../interfaces/user";
-type usernamePassword = {
-  username: string;
+type emailPassword = {
+  email: string;
   password: string;
 };
 
+const request = axios.create({
+  withCredentials: true,
+});
+
 export const getAllUsers = async (): Promise<IUser[]> => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_BASE}/users`);
+    const response = await request.get(
+      `${process.env.REACT_APP_API_BASE}/users`
+    );
     return response.data;
   } catch (error) {
     throw new Error("Trouble finding users");
@@ -72,7 +78,7 @@ export const signUp = async (user: IUserDTO): Promise<IUser> => {
   }
 };
 
-export const signIn = async (user: usernamePassword): Promise<IUser> => {
+export const signIn = async (user: emailPassword): Promise<IUser> => {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_API_BASE}/auth/signin`,
@@ -92,7 +98,7 @@ export const signOut = async (): Promise<void> => {
   }
 };
 
-export const getSignedInUser = async (): Promise<IUser> => {
+export const getSignedInUser = async (): Promise<IUser | undefined | null> => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_BASE}/auth/account`

@@ -1,34 +1,30 @@
 import React from "react";
-import {useParams} from "react-router-dom";
-import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
-import {useLocation} from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import "./navbar.css";
+import {useUser} from "../../contexts/UserContext";
 
 function Navbar() {
-  const [searchType, setSearchType] = React.useState("Team");
-  const [searchText, setSearchText] = React.useState("");
+  const {user} = useUser();
   const navigate = useNavigate();
-  const location = useLocation();
+  library.add(faMagnifyingGlass);
 
   const navigateToHome = () => {
     navigate("/home");
   };
 
-  const navigateToAccount = () => {
-    navigate("/account/1");
+  const handlePressSearch = () => {
+    navigate(`/search`);
   };
 
   return (
-    <div className='navbar blue-background'>
+    <div className='navbar red-background'>
       <div className='navbar-home' onClick={() => navigateToHome()}>
         Net Natter
       </div>
-      <div className='navbar-search'>
+      {/* <div className='navbar-search'>
         <InputGroup>
           <input
             type='text'
@@ -49,11 +45,31 @@ function Navbar() {
             <Dropdown.Item eventKey='Player'>Player</Dropdown.Item>
           </DropdownButton>
         </InputGroup>
-      </div>
+      </div> */}
+      <button
+        className='btn btn-outline-white navbar-search-icon-box bg-white me-3'
+        onClick={() => handlePressSearch()}
+      >
+        <FontAwesomeIcon icon={faMagnifyingGlass} />
+      </button>
 
-      <div className='navbar-account'>
-        <button onClick={() => navigateToAccount()}>Acount</button>
-      </div>
+      {user && (
+        <button
+          className='btn btn-outline-white bg-white margin-right-100'
+          onClick={() => navigate(`/home${user._id}`)}
+        >
+          Account
+        </button>
+      )}
+
+      {!user && (
+        <button
+          className='btn btn-outline-white bg-white margin-right-100'
+          onClick={() => navigate(`/welcome`)}
+        >
+          Sign in
+        </button>
+      )}
     </div>
   );
 }
