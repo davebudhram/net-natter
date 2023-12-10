@@ -1,33 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {IGame} from "../interfaces/game";
 import GameTeamStats from "../components/gameTeamStats/gameTeamStats";
 import GameTeamPlayerStats from "../components/gameTeamPlayerStats/gameTeamPlayerStats";
 import {IGameTeamStats, IPlayerStats} from "../interfaces/stats";
-
-const temp: IGameTeamStats = {
-  gameId: 12940,
-  teamId: 23,
-  fgm: 0,
-  fga: 0,
-  fgp: "1",
-  ftm: 0,
-  fta: 0,
-  ftp: "133",
-  tpm: 0,
-  tpa: 0,
-  tpp: "30%",
-  offensiveRebounds: 0,
-  defensiveRebounds: 0,
-  totalRebounds: 0,
-  assists: 0,
-  steals: 0,
-  blocks: 0,
-  fouls: 0,
-  plusMinus: "-4",
-  turnovers: 0,
-  points: 90,
-};
+import {getIndividualGameByGameId} from "../services/gameData";
+import {
+  getGameStatsData,
+  getPlayerStatsPerGameData,
+} from "../services/statsData";
+import LiveGameCard from "../components/gameCards/liveGameCard";
 
 const temp2: IPlayerStats[] = [
   {
@@ -709,17 +691,69 @@ const temp2: IPlayerStats[] = [
 
 function Game() {
   const {gameId} = useParams();
-  return (
-    <div className='page'>
-      <h1>Game</h1>
-      <p>This is the game page for game id {gameId}</p>
-      <div className='d-flex'>
-        <div className='me-5'>
-          <GameTeamStats awayTeamStats={temp} homeTeamStats={temp} />
-        </div>
+  const [game, setGame] = React.useState<IGame | undefined>(undefined);
+  const [homeTeamId, setHomeTeamId] = React.useState<number>(0);
+  const [awayTeamId, setAwayTeamId] = React.useState<number>(0);
+  const [homeTeamStats, setHomeTeamStats] = React.useState<
+    IGameTeamStats | undefined
+  >();
+  const [awayTeamStats, setAwayTeamStats] = React.useState<
+    IGameTeamStats | undefined
+  >();
+  const [playerStats, setPlayerStats] = React.useState<IPlayerStats[]>([]);
 
-        <GameTeamPlayerStats stats={temp2} awayTeamId={4} homeTeamId={21} />
-      </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      const gameResponse = await getIndividualGameByGameId(Number(gameId));
+      setGame(gameResponse);
+      if (gameResponse) {
+        setHomeTeamId(gameResponse.homeTeamId);
+        setAwayTeamId(gameResponse.awayTeamId);
+        const gameStatsResponse = await getGameStatsData(Number(gameId));
+        setHomeTeamStats(
+          gameStatsResponse[0].teamId === gameResponse?.homeTeamId
+            ? gameStatsResponse[0]
+            : gameStatsResponse[1]
+        );
+        setAwayTeamStats(
+          gameStatsResponse[0].teamId === gameResponse?.awayTeamId
+            ? gameStatsResponse[0]
+            : gameStatsResponse[1]
+        );
+        const playerStatsResponse = await getPlayerStatsPerGameData(
+          Number(gameId)
+        );
+        setPlayerStats(playerStatsResponse);
+      }
+    };
+
+    fetchData();
+  }, [gameId]);
+
+  return (
+    <div className='page pt-5'>
+      {!game && <div>Loading...</div>}
+      {game && (
+        <>
+          <div className='d-flex'>
+            <div className='me-5'>
+              <LiveGameCard game={game} />
+              {homeTeamStats && awayTeamStats && (
+                <GameTeamStats
+                  awayTeamStats={awayTeamStats}
+                  homeTeamStats={homeTeamStats}
+                />
+              )}
+            </div>
+
+            <GameTeamPlayerStats
+              stats={playerStats}
+              awayTeamId={awayTeamId}
+              homeTeamId={homeTeamId}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
