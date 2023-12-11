@@ -1,0 +1,12 @@
+.team-table-container {
+    margin-left: 10px;
+    width: 420px;
+}
+
+.team-table-title-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px;
+    text-align: center;
+    width: 100%;
+}

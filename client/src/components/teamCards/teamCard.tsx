@@ -1,6 +1,7 @@
 import React from "react";
 import "./teamCard.css";
 import { ITeam } from "../../interfaces/team";
+import { useNavigate } from "react-router";
 import EasternConferenceIcon from "../../assets/images/eastern.png";
 import WesternConferenceICon from "../../assets/images/western.gif";
 
@@ -10,9 +11,14 @@ interface TeamCardProps {
 
 function TeamCard(props: TeamCardProps) {
   const { team } = props;
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/team/${team._id}`);
+  };
 
   return (
-    <div className='team-card'>
+    <div className='team-card' onClick={handleCardClick}>
       <div className='team-card-team-logo-row'>
         <img
           className='team-conference-card-logo'
@@ -27,7 +33,8 @@ function TeamCard(props: TeamCardProps) {
       </div>
       <div className='team-card-text-row'>
         &nbsp;
-        <div className="team-name-text">#{team.rank} &nbsp;</div>
+        <div className="team-name-text">#{team.rank}</div>
+        &nbsp;
         <div className='team-name-text'>{team.name}</div>
         &nbsp; <span> - </span> &nbsp;
         <div className="team-name-text text-danger">{team.code}</div>
