@@ -32,4 +32,19 @@ const getTeamsData = async (): Promise<ITeam[]> => {
     }
 };
 
-export { getTeamsData };
+const getSingleTeamData = async (teamId: number): Promise<ITeam> => {
+    try { 
+        const allTeamsData = await getTeamsData();
+        const teamData = allTeamsData.find((team: ITeam) => team._id === teamId);
+        if (teamData === undefined) {
+            throw new Error("Team not found");
+        }
+        console.log(teamData);
+        return teamData;
+    } catch (error) {
+        console.error('Error fetching team:', error);
+        throw error;
+    }
+};
+
+export { getTeamsData, getSingleTeamData };

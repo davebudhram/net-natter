@@ -11,8 +11,17 @@ const getPlayersData = async (teamId: number): Promise<IPlayer[]> => {
             headers,
         });
         const teamRawData = teamRawResponse.data["response"];
-         
+
+        const headShotURL = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${teamId}/roster`;
+
+        const headShotData = (await axios.get(`${headShotURL}`)).data;
+        const headShotAthletesData = headShotData["athletes"];
+
         const players: IPlayer[] = teamRawData.map((rawPlayer: any) => {
+            const headShotString = headShotAthletesData.find((headShotPlayer: any) => 
+                rawPlayer.firstname + " " + rawPlayer.lastname === headShotPlayer["fullName"]
+            );
+            console.log(headShotString);
             return {
                 _id: rawPlayer.id,
                 firstName: rawPlayer.firstname,
@@ -24,6 +33,7 @@ const getPlayersData = async (teamId: number): Promise<IPlayer[]> => {
                 country: rawPlayer.birth.country,
                 height: rawPlayer.height.feets + "'" + rawPlayer.height.inches,
                 college: rawPlayer.college,
+                headShot: headShotString["headshot"]["href"],
             };
         });
         console.log(players);
