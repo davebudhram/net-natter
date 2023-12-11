@@ -50,6 +50,7 @@ function Signin() {
     }
     try {
       const signInUser = await logInContext(email, password);
+      console.log(signInUser);
       navigate(`/account/${signInUser._id}`);
     } catch (error) {
       alert("Error logging in");
@@ -91,7 +92,7 @@ function Signin() {
         <button
           type='button'
           className='btn btn-outline-dark'
-          onClick={() => handleSignin()}
+          onClick={async () => await handleSignin()}
         >
           Log in
         </button>

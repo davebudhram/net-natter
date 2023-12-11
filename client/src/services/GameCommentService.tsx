@@ -27,7 +27,7 @@ export const getGameCommentsByGame = async (
 ): Promise<IGameComment[]> => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_BASE}/analystArticle/author/${gameId}`
+      `${process.env.REACT_APP_API_BASE}/gameComment/${gameId}`
     );
     return response.data;
   } catch (error) {
