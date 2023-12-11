@@ -13,8 +13,6 @@ const getUpcomingGameData = async (): Promise<IGame[]> => {
       const currentDate = new Date();
       return gameDate > currentDate;
     });
-
-    console.log(upcomingGames);
     return upcomingGames;
   } catch (error) {
     console.error("Error fetching game stats:", error);
@@ -27,7 +25,6 @@ const getIndividualGameTeamData = async (teamId: number): Promise<IGame[]> => {
   try {
     const params = {team: teamId, season: season};
     const games = await parseGameData(params);
-    console.log(games);
     return games;
   } catch (error) {
     console.error("Error fetching game stats:", error);
@@ -57,7 +54,6 @@ const getLiveGameData = async (): Promise<IGame[]> => {
   try {
     const params = {live: "all"};
     const games = await parseGameData(params);
-    console.log(games);
     return games;
   } catch (error) {
     console.error("Error fetching game stats:", error);
@@ -73,7 +69,6 @@ const getDateGameData = async (): Promise<IGame[]> => {
       .split("T")[0];
     const params = {date: tomorrowDate};
     const games = await parseGameData(params);
-    console.log(games);
     return games;
   } catch (error) {
     console.error("Error fetching game stats:", error);

@@ -24,7 +24,6 @@ const getTeamsData = async (): Promise<ITeam[]> => {
                 losses: rawTeam.conference.loss,
             };
         });
-        console.log(teams);
         return teams;
     } catch (error) {
         console.error('Error fetching standings:', error);
@@ -32,4 +31,18 @@ const getTeamsData = async (): Promise<ITeam[]> => {
     }
 };
 
-export { getTeamsData };
+const getSingleTeamData = async (teamId: number): Promise<ITeam> => {
+    try { 
+        const allTeamsData = await getTeamsData();
+        const teamData = allTeamsData.find((team: ITeam) => team._id === teamId);
+        if (teamData === undefined) {
+            throw new Error("Team not found");
+        }
+        return teamData;
+    } catch (error) {
+        console.error('Error fetching team:', error);
+        throw error;
+    }
+};
+
+export { getTeamsData, getSingleTeamData };
