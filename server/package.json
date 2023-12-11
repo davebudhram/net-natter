@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && npm install --save-dev ts-node && npm run build-ts",
-    "build-ts": "tsc",
-    "start": "npm run build && node dist/app.js"
+    "start": "npm install -g ts-node && ts-node src/app.ts"
   },
   "keywords": [],
   "author": "",
