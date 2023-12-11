@@ -1,0 +1,59 @@
+.team-card {
+  width: 400px;
+  height: auto;
+  border: 5px solid #990011;
+  border-radius: 5px;
+  margin-right: 40px;
+  margin-bottom: 40px;
+}
+.team-card-team-logo-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 125px;
+}
+
+.team-conference-card-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.team-card-team-logo {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin-left: 65px;
+  margin-top: 10px;
+  margin-right: 125px;
+  margin-bottom: 10px;
+}
+
+.team-card-text-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.team-name-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+.team-card-standings-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  font-size: 24px;
+}
