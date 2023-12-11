@@ -35,13 +35,28 @@
     transition: color 0.3s ease;
 }
 
+.player-heart-icon-card {
+    position: absolute;
+    top: 0%;
+    left: 1%;
+    z-index: 2;
+    font-size: 48px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    color: red;
+}
+
+.player-heart-icon-card:hover {
+    cursor: pointer;
+}
+
 .player-card:hover .player-jersey-number-text-card {
     color: #000;
 }
 
 .player-card-row {
     width: 250px;
-    height: 200px;
+    height: 181px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -55,9 +70,8 @@
     font-size: 20px;
     height: 50px;
     text-wrap: nowrap;
-}
-
-.player-card:hover .player-card-text-row {
+    align-items: center;
+    text-align: center;
     background-color: #000;
     color: #fff;
 }

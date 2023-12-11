@@ -18,13 +18,18 @@ function Team() {
     
     useEffect(() => {
         const fetchData = async () => {
-            if (teamId) {   
-                const teamData = await getSingleTeamData(parseInt(teamId));
-                const playersData = await getPlayersData(parseInt(teamId));
-                const gamesData = await getIndividualGameTeamData(parseInt(teamId));
+            if (!teamId) {
+                console.log("No team");
+                return;
+            }
+            const teamData = await getSingleTeamData(parseInt(teamId));
+            const gamesData = await getIndividualGameTeamData(parseInt(teamId));
+            setGames(gamesData);
+            setTeam(teamData);
+
+            if (teamData) {
+                const playersData = await getPlayersData(parseInt(teamId), teamData.code.toLowerCase());
                 setPlayers(playersData);
-                setGames(gamesData);
-                setTeam(teamData);
             }
         };
         
@@ -32,12 +37,13 @@ function Team() {
     }, [teamId]);
 
     return (
-        <div>
+        <div className="page">
             <h1 className="team-page-name-text">{team ? team.name: "No Team"}</h1>
             <p>This is the team page for team id {teamId}</p>
             <div className='d-flex flex-row'>
                 <TeamGameSchedule games={games} />
                 <div>
+                    <h2 className="player-title-text-row"> Players </h2>
                     <PlayersTable players={players} />
                 </div>
             </div>

@@ -62,10 +62,6 @@ function Home() {
         <TeamCard team={teamTemp} />
       </div>
       <div className='row'>
-        <button onClick={async () => await getPlayersData(1)}>
-          {" "}
-          TEST{" "}
-        </button>
       </div>
       <button className='btn btn-secondary'>Press me!</button>
       <div/>
