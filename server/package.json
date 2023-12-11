@@ -22,7 +22,8 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "mongoose": "^8.0.2"
+    "mongoose": "^8.0.2",
+    "your-package": "https://github.com/davebudhram/net-natter.git"
   },
   "engines": {
     "node": "18.17.1",
