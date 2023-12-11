@@ -10,7 +10,10 @@ import {
   getPlayerStatsPerGameData,
 } from "../services/statsData";
 import LiveGameCard from "../components/gameCards/liveGameCard";
-
+import {IGameComment} from "../interfaces/gameComment";
+import {getGameCommentsByGame} from "../services/GameCommentService";
+import Comment from "../components/comment/comment";
+import GameComments from "../components/gameComments/gameComments";
 const temp2: IPlayerStats[] = [
   {
     firstName: "Kevin",
@@ -702,6 +705,8 @@ function Game() {
   >();
   const [playerStats, setPlayerStats] = React.useState<IPlayerStats[]>([]);
 
+  const [comments, setComments] = React.useState<IGameComment[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const gameResponse = await getIndividualGameByGameId(Number(gameId));
@@ -724,6 +729,8 @@ function Game() {
           Number(gameId)
         );
         setPlayerStats(playerStatsResponse);
+        const commentsResponse = await getGameCommentsByGame(Number(gameId));
+        setComments(commentsResponse);
       }
     };
 
@@ -746,11 +753,18 @@ function Game() {
               )}
             </div>
 
-            <GameTeamPlayerStats
-              stats={playerStats}
-              awayTeamId={awayTeamId}
-              homeTeamId={homeTeamId}
-            />
+            <div className='d-flex flex-column'>
+              <GameTeamPlayerStats
+                stats={playerStats}
+                awayTeamId={awayTeamId}
+                homeTeamId={homeTeamId}
+              />
+              <GameComments
+                comments={comments}
+                gameId={Number(gameId)}
+                setComments={setComments}
+              />
+            </div>
           </div>
         </>
       )}

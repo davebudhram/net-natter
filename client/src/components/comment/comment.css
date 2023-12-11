@@ -1,0 +1,37 @@
+.comment {
+  width: 820px;
+  height: auto;
+}
+
+.comment-header {
+  display: flex;
+  overflow: hidden;
+}
+
+.comment-name {
+  font-weight: bold;
+}
+
+.comment-date {
+  color: gray;
+  font-weight: lighter;
+}
+
+.profile-container {
+  background-color: #990011;
+  color: white;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.delete-comment-icon-box {
+  cursor: pointer;
+}

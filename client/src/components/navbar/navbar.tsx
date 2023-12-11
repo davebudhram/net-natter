@@ -56,7 +56,7 @@ function Navbar() {
       {user && (
         <button
           className='btn btn-outline-white bg-white margin-right-100'
-          onClick={() => navigate(`/home${user._id}`)}
+          onClick={() => navigate(`/account/${user._id}`)}
         >
           Account
         </button>

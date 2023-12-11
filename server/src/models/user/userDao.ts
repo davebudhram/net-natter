@@ -144,11 +144,14 @@ class UserDao {
   }
 
   static async userSignIn(
-    username: string,
+    email: string,
     password: string
   ): Promise<IUser | null> {
     try {
-      const signedUser = await UserModel.findOne({username, password}).exec();
+      const signedUser = await UserModel.findOne({
+        email: email,
+        password: password,
+      }).exec();
       if (signedUser) {
         return signedUser;
       } else {
