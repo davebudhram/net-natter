@@ -1,6 +1,7 @@
 import axios from "axios";
 import { season, url, headers } from "./endpointTypes";
 import { IPlayer } from "../interfaces/player";
+import NbaLogo from "../assets/images/nba_logo.png";
 
 // Get all players data based on Team ID
 const getPlayersData = async (teamId: number, teamCode: string): Promise<IPlayer[]> => {
@@ -17,6 +18,7 @@ const getPlayersData = async (teamId: number, teamCode: string): Promise<IPlayer
         const headShotData = (await axios.get(`${headShotURL}`)).data;
         const headShotAthletesData = headShotData["athletes"];
         console.log(headShotAthletesData);
+        console.log(teamRawData);
 
         const players: IPlayer[] = teamRawData.map((rawPlayer: any) => {
             const espnPlayer = headShotAthletesData.find((headShotPlayer: any) => 
@@ -34,7 +36,7 @@ const getPlayersData = async (teamId: number, teamCode: string): Promise<IPlayer
                     country: rawPlayer.birth.country,
                     height: rawPlayer.height.feets + "'" + rawPlayer.height.inches,
                     college: rawPlayer.college,
-                    headShot: espnPlayer["headshot"]["href"],
+                    headShot: espnPlayer["headshot"] ? espnPlayer["headshot"]["href"] : NbaLogo,
                 };
             }
         });
