@@ -28,13 +28,16 @@ function PlayerCard(props: PlayerCardProps) {
       alert("Please log in to like a player");
       return;
     }
-
-    if (!isLiked) {
-      await createUserPlayerLikes({ userId: user._id, playerId: player._id});
-      setIsLiked(true);
-    } else {
-      await deleteUserPlayerLike(user._id, player._id);
-      setIsLiked(false);
+    try { 
+      if (!isLiked) {
+        await createUserPlayerLikes({ userId: user._id, playerId: player._id});
+        setIsLiked(true);
+      } else {
+        await deleteUserPlayerLike(user._id, player._id);
+        setIsLiked(false);
+      }
+    } catch (error) {
+      console.log("Error creating user player like:", error);
     }
   };
 

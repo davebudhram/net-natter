@@ -13,11 +13,11 @@ import TeamStatsCard from "../../components/teamStatsCard/teamStatsCard";
 import { ITeamStats } from "../../interfaces/stats";
 import { useUser } from "../../contexts/UserContext";
 import "./Team.css";
-import { updateUser } from "../../services/UserService";
 
 function Team() {
     const { teamId } = useParams();
-    const { user }  = useUser();
+    const { user, updateUserContext }  = useUser();
+    const [favoriteTeam, setFavoriteTeam] = useState<boolean>((user && teamId) ? user.favoriteTeamID === parseInt(teamId) : false);
     const [team, setTeam] = useState<ITeam>(); 
     const [players, setPlayers] = useState<IPlayer[]>([]);
     const [games, setGames] = useState<IGame[]>([]);
@@ -45,6 +45,7 @@ function Team() {
         fetchData();
     }, [teamId]);
 
+
     const formatStandings = (rank: number) => {
         switch (rank) {
             case 1:
@@ -63,14 +64,16 @@ function Team() {
             alert("You must be logged in to favorite a team");
             return;
         }
-        console.log(user.favoriteTeamID);
-        console.log(team._id);
-        if (user.favoriteTeamID === team._id) {
-            user.favoriteTeamID = undefined;
-            await updateUser(user._id, user);
-        } else {
-            user.favoriteTeamID = team._id;
-            await updateUser(user._id, user);
+        try {
+            if (favoriteTeam) {
+                await updateUserContext({favoriteTeamID: undefined});
+                setFavoriteTeam(false);
+            } else {
+                await updateUserContext({favoriteTeamID: team._id});
+                setFavoriteTeam(true);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -88,7 +91,7 @@ function Team() {
                 <div className="d-flex flex-column justify-content-between py-4 text-nowrap">
                     <h1 className="team-name-header-text">{team.name} - {team.code}</h1>
                     <h2 className="team-stats-header-text">
-                        {user && user.favoriteTeamID === team._id ? 
+                        {favoriteTeam ?
                             <button className="btn btn-outline-dark" onClick={async () => await handleFavoriteClick()}>Unfavorite</button>
                             : 
                             <button className="btn btn-outline-dark" onClick={async () => await handleFavoriteClick()}>Favorite</button>
