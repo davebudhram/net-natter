@@ -31,7 +31,7 @@ function UserRoutes(app: Express) {
   );
 
   // Remove the followee from the follower
-  app.post(
+  app.delete(
     "/api/users/unfollow/:followerId/:followeeId",
     UserController.removeUserFromFollowers
   );

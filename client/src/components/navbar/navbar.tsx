@@ -5,9 +5,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import "./navbar.css";
 import {useUser} from "../../contexts/UserContext";
+import {sign} from "crypto";
 
 function Navbar() {
-  const {user} = useUser();
+  const {user, signedIn} = useUser();
   const navigate = useNavigate();
   library.add(faMagnifyingGlass);
 
@@ -18,6 +19,8 @@ function Navbar() {
   const handlePressSearch = () => {
     navigate(`/search`);
   };
+
+  React.useEffect(() => {}, [signedIn]);
 
   return (
     <div className='navbar red-background'>
@@ -53,16 +56,16 @@ function Navbar() {
         <FontAwesomeIcon icon={faMagnifyingGlass} />
       </button>
 
-      {user && (
+      {signedIn && (
         <button
           className='btn btn-outline-white bg-white margin-right-100'
-          onClick={() => navigate(`/account/${user._id}`)}
+          onClick={() => navigate(`/account/${user?._id}`)}
         >
           Account
         </button>
       )}
 
-      {!user && (
+      {!signedIn && (
         <button
           className='btn btn-outline-white bg-white margin-right-100'
           onClick={() => navigate(`/welcome`)}
