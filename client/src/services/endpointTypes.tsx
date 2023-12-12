@@ -1,5 +1,5 @@
 const league = 'standard';
-const season = '2023';
+const season = new Date().getMonth() > 9 ? new Date().getFullYear() : new Date().getFullYear() - 1;
 
 const url = 'https://api-nba-v1.p.rapidapi.com';
 

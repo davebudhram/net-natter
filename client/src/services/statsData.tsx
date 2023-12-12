@@ -1,6 +1,6 @@
 import axios from "axios";
 import { league, season, url, headers } from "./endpointTypes";
-import { IPlayerStats, IGameTeamStats } from "../interfaces/stats";
+import { IPlayerStats, IGameTeamStats, ITeamStats } from "../interfaces/stats";
 
 // Get All Players Stats based on a given game
 const getPlayerStatsPerGameData = async (gameId: number): Promise<IPlayerStats[]> => {
@@ -91,4 +91,48 @@ const getGameStatsData = async (gameId: number): Promise<IGameTeamStats[]> => {
     }
 };
 
-export { getPlayerStatsPerGameData, getGameStatsData };
+// Get Team Stats based on a given team ID
+const getTeamStatsData = async (teamId: number): Promise<ITeamStats> => {
+    const params = { "id": teamId, "season": season }
+    try {
+        const teamsDataResponse = await axios.get(`${url}/teams/statistics`, {
+            params,
+            headers,
+        });
+        const teamStatsRawData = teamsDataResponse.data["response"];
+         
+        const teamStats: ITeamStats[] = teamStatsRawData.map((rawStats: any) => {
+            return {
+                teamId: teamId,
+                gamesPlayed: rawStats.games,
+                points: rawStats.points,
+                fgm: rawStats.fgm,
+                fga: rawStats.fga,
+                fgp: rawStats.fgp,
+                ftm: rawStats.ftm,
+                fta: rawStats.fta,
+                ftp: rawStats.ftp,
+                tpm: rawStats.tpm,
+                tpa: rawStats.tpa,
+                tpp: rawStats.tpp,
+                offensiveRebounds: rawStats.offReb,
+                defensiveRebounds: rawStats.defReb,
+                totalRebounds: rawStats.totReb,
+                assists: rawStats.assists,
+                steals: rawStats.steals,
+                blocks: rawStats.blocks,
+                fouls: rawStats.pFouls,
+                plusMinus: rawStats.plusMinus,
+                turnovers: rawStats.turnovers,
+            };
+        });
+        console.log(teamStats);
+        return teamStats[0];
+    } catch (error) {
+        console.error('Error fetching team stats:', error);
+        throw error;
+    }
+};
+
+
+export { getPlayerStatsPerGameData, getGameStatsData, getTeamStatsData };

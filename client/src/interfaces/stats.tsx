@@ -31,3 +31,8 @@ export interface IGameTeamStats extends IStats {
   gameId: number;
   teamId: number;
 }
+
+export interface ITeamStats extends IStats {
+  teamId: number;
+  gamesPlayed: number;
+}
