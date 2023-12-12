@@ -1,24 +1,91 @@
 import React from "react";
 import "./teamGameSchedule.css";
 import { IGame } from "../../interfaces/game";
-import LiveGameCard from "../gameCards/liveGameCard";
 
 
 export type TeamGameScheduleProps = {
   games: IGame[];
+  teamId: number;
 };
 
 function TeamGameSchedule(props: TeamGameScheduleProps) { 
-    const { games } = props;
+    const { games, teamId } = props;
     const pastGames = games.filter((game) => game.status === "Finished").reverse();
     const upcomingGame = games.find((game) => game.status === "Scheduled");
     return (
-        <div className='d-flex team-table-container flex-wrap'>
-            <div className="team-table-title-text"> Game Schedule </div>
-            <LiveGameCard game={upcomingGame} />
-            {pastGames.map((game) => (
-                <LiveGameCard game={game} />
-            ))}
+        <div className='team-table-container flex-wrap'>
+            <div className="table-responsive">
+                <table className="table mb-0">
+                <thead className="team-table-title-text">
+                    <tr>
+                        <th>
+                            Game Schedule
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {upcomingGame && (
+                        <tr key={upcomingGame._id}>
+                            <td>
+                                <div className="team-table-game-container">
+                                    <div className="mx-1">
+                                    {upcomingGame.homeTeamId === teamId ? (
+                                        <div>
+                                        vs <img className='team-table-logo-text mx-1' src={upcomingGame.awayLogo} alt={`Logo for ${upcomingGame.awayTeamName}`} />
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            @ <img className='team-table-logo-text mx-1' src={upcomingGame.homeLogo} alt={`Logo for ${upcomingGame.homeTeamName}`} />
+                                        </div>                                    
+                                    )}
+                                    </div>
+                                    <div>
+                                        <div className="d-flex flex-column mx-1">
+                                            <div className="text-end">{new Date(upcomingGame.startTime).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' })}</div>
+                                            <div>{new Date(upcomingGame.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    )}
+                    {pastGames.map((game) => (
+                    <tr key={game._id}>
+                        <td>
+                            <div className="team-table-game-container">
+                                <div className="mx-1">
+                                {game.homeTeamId === teamId ? (
+                                    <div>
+                                    vs <img className='team-table-logo-text mx-1' src={game.awayLogo} alt={`Logo for ${game.awayTeamName}`} />
+                                    </div>
+                                ) : (
+                                    <div>
+                                        @ <img className='team-table-logo-text mx-1' src={game.homeLogo} alt={`Logo for ${game.homeTeamName}`} />
+                                    </div>                                    
+                                )}
+                                </div>
+                                <div>
+                                    <div className="d-flex flex-column mx-1">
+                                    {(game.homeTeamId === teamId && game.homeTeamScore > game.awayTeamScore) ? (
+                                        <div>
+                                            <span className="text-success fw-bold mx-2">W</span>
+                                            {game.homeTeamScore} - {game.awayTeamScore}
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <span className="text-danger fw-bold mx-2">L</span>                                   
+                                            {game.awayTeamScore} - {game.homeTeamScore}
+                                        </div>
+                                    )}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    ))}
+                </tbody>
+                </table>
+            </div>
         </div>
     );
 };

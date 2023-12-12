@@ -17,8 +17,12 @@ function PlayersTable(props: PlayersTableProps) {
             if (!user) {
                 return;
             }
-            const allLikedPlayers = await getAllPlayerUserLikesByUser(user._id);
-            setLikedPlayers(allLikedPlayers);
+            try {
+                const allLikedPlayers = await getAllPlayerUserLikesByUser(user._id);
+                setLikedPlayers(allLikedPlayers);
+            } catch (error) {
+                console.log("Error fetching liked players:", error);
+            }
         };
 
         fetchData();
