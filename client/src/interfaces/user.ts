@@ -6,7 +6,8 @@ export interface IUserDTO {
   password: string;
   role: Role;
   favoriteTeamID?: number;
-  goatID?: number;
+  bio?: string;
+  organization?: string;
   followers?: string[];
   followings?: string[];
 }

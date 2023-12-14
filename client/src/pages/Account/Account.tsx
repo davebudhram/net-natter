@@ -12,6 +12,7 @@ import {
 import FollowerTable from "./Follow/followerTable";
 import FollowingTable from "./Follow/followingTable";
 import {IUser} from "../../interfaces/user";
+import {set} from "mongoose";
 
 function Account() {
   const {accountId} = useParams();
@@ -21,8 +22,9 @@ function Account() {
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [fullName, setFullname] = React.useState("");
-  // const [bio, setBio] = React.useState("");
-  // const [organization, setOrganization] = React.useState("");
+  const [bio, setBio] = React.useState("");
+  const [organization, setOrganization] = React.useState("");
+  const [role, setRole] = React.useState("");
 
   const handleEditAccount = async () => {
     alert("Updating account");
@@ -33,13 +35,23 @@ function Account() {
       }
 
       try {
-        await updateUserContext({
-          email: email,
-          fullName: fullName,
-        });
+        if (role === "USER") {
+          await updateUserContext({
+            email: email,
+            fullName: fullName,
+            bio: bio,
+          });
+        }
+        if (role === "ANALYST") {
+          await updateUserContext({
+            email: email,
+            fullName: fullName,
+            organization: organization,
+          });
+        }
         alert("Account updated");
       } catch (error) {
-        alert("Error logging in");
+        alert("Error changing account");
       }
     }
   };
@@ -104,10 +116,13 @@ function Account() {
           const userResponse = await getUserById(accountId);
           setEmail(userResponse.email);
           setFullname(userResponse.fullName);
+          setBio(userResponse.bio || "");
+          setOrganization(userResponse.organization || "");
           const userFollowers = await getUserFollowers(accountId);
           setFollowers(userFollowers);
           const userFollowings = await getUserFollowees(accountId);
           setFollowings(userFollowings);
+          setRole(userResponse.role);
 
           // setBio(userResponse.bio);
           // setOrganization(userResponse.organization);
@@ -151,6 +166,39 @@ function Account() {
               onChange={(event) => setFullname(event.target.value)}
             />
             <br />
+            {role === "USER" && (
+              <>
+                <label htmlFor='Bio' className='mb-2'>
+                  Bio
+                </label>
+
+                <input
+                  type='text'
+                  id='Bio'
+                  name='Bio'
+                  className='form-control'
+                  value={bio}
+                  onChange={(event) => setBio(event.target.value)}
+                />
+                <br />
+              </>
+            )}
+            {role === "ANALYST" && (
+              <>
+                <label htmlFor='Organization' className='mb-2'>
+                  Orgnization
+                </label>
+                <input
+                  type='text'
+                  id='Organization'
+                  name='Organization'
+                  className='form-control'
+                  value={organization}
+                  onChange={(event) => setOrganization(event.target.value)}
+                />
+                <br />
+              </>
+            )}
             <div className='d-flex flex-row'>
               <button
                 className='btn btn-outline-success me-3'
@@ -172,7 +220,7 @@ function Account() {
       {(!signedIn || (user && user._id !== accountId)) && (
         <div className='page pt-3'>
           <h2>
-            {fullName}{" "}
+            {fullName + " (" + role + ") "}
             {(!user ||
               (user &&
                 user.followings &&
@@ -200,10 +248,24 @@ function Account() {
           <div className='d-flex flex-row'>
             <div>
               <div className='border account-section'>
-                <label htmlFor='Full Name' className='mb-2'>
-                  Full Name
-                </label>
-                <div>{fullName}</div>
+                {role === "USER" && (
+                  <>
+                    {" "}
+                    <label htmlFor='Full Name' className='mb-2'>
+                      Bio
+                    </label>
+                    <div>{bio}</div>{" "}
+                  </>
+                )}
+                {role === "ANALYST" && (
+                  <>
+                    {" "}
+                    <label htmlFor='Full Name' className='mb-2'>
+                      Organization
+                    </label>
+                    <div>{organization}</div>{" "}
+                  </>
+                )}
                 <br />
               </div>
             </div>
