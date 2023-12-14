@@ -14,7 +14,11 @@ function TeamCard(props: TeamCardProps) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/team/${team._id}`);
+    try {
+      navigate(`/team/${team._id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -38,12 +42,6 @@ function TeamCard(props: TeamCardProps) {
         <div className='team-name-text'>{team.name}</div>
         &nbsp; <span> - </span> &nbsp;
         <div className="team-name-text text-danger">{team.code}</div>
-      </div>
-      <div className="team-card-standings-row">
-        &nbsp;
-        <div className="team-name-text">{team.wins}</div>
-        &nbsp; <span> - </span> &nbsp;
-        <div className="team-name-text">{team.losses}</div>
       </div>
     </div>
   );
