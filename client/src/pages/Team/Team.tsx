@@ -47,7 +47,7 @@ function Team() {
             }
         };
         
-        // fetchData();
+        fetchData();
     }, [teamId]);
 
 
