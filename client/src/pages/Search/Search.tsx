@@ -14,8 +14,8 @@ function Search() {
     const [searchInputText, setSearchInputText] = useState<string>(searchText ? searchText : "");
     const [searchInputType, setSearchInputType] = useState<string>(searchType ? searchType : "Team");
     const [teamSearchResults, setTeamSearchResults] = useState<ITeam[]>([]);
-    const [playerSearchResults, setPlayerSearchResults] = useState<IPlayer[]>([]);
-    const [likedPlayers, setLikedPlayers] = useState<Number[]>([]);
+    // const [playerSearchResults, setPlayerSearchResults] = useState<IPlayer[]>([]);
+    // const [likedPlayers, setLikedPlayers] = useState<Number[]>([]);
 
     const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
