@@ -35,7 +35,7 @@ const searchByTeamName = async (teamName: string): Promise<ITeam[]> => {
 const searchByPlayerLastName = async(playerLastName: string): Promise<IPlayer[]> => {
     const params = { "search": playerLastName }
     try {
-        return getAllPlayersData(0, "", params);
+        return [];
     }  catch (error) {
         console.error('Error fetching players:', error);
         throw error;
