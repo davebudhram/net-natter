@@ -35,10 +35,9 @@ class UserDao {
     updatedUserData: Partial<IUserDTO>
   ): Promise<IUser | null> {
     try {
-      const unSetUserData = (updatedUserData.favoriteTeamID) ? 
-        updatedUserData
-        : 
-        {$unset: {favoriteTeamID: 1}, ...updatedUserData}
+      const unSetUserData = updatedUserData.favoriteTeamID
+        ? updatedUserData
+        : {$unset: {favoriteTeamID: 1}, ...updatedUserData};
       const updatedUser = await UserModel.findByIdAndUpdate(
         userId,
         unSetUserData,

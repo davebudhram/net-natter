@@ -11,7 +11,7 @@ function FollowCard(props: FollowCardProps) {
   const {user} = props;
 
   return (
-    <div className='d-flex flex-row align-items-center text-left'>
+    <div className='d-flex flex-row align-items-center text-left mb-2'>
       <div className='profile-container'>
         <FontAwesomeIcon icon={faUser} className='' />
       </div>
