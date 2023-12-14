@@ -10,6 +10,7 @@ import Team from "./pages/Team/Team";
 import Article from "./pages/Article";
 import Search from "./pages/Search";
 import Welcome from "./pages/Welcome/Welcome";
+import AnalystArticle from "./pages/Analyst Article/AnalystArticle";
 
 function AppRouter() {
   return (
@@ -28,6 +29,10 @@ function AppRouter() {
         <Route path='/article/:articleId' element={<Article />} />
         <Route path='/search' element={<Search />} />
         <Route path='/search/:searchType/:searchText' element={<Search />} />
+        <Route
+          path='analyst-article/:analystArticleId'
+          element={<AnalystArticle />}
+        />
 
         <Route path='*' element={<h1>Not Found</h1>} />
       </Routes>

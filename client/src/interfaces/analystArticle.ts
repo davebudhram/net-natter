@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
 export interface IAnalystArticleDTO {
-  authorId: mongoose.Schema.Types.ObjectId;
+  authorId: string;
+  authorName: string;
   title: string;
   text: string;
   date: Date;

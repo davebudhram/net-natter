@@ -1,0 +1,11 @@
+.analyst-article {
+  border: 1px solid #b31010;
+  border-radius: 5px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  width: 800px;
+  min-width: 400px;
+  height: auto;
+  cursor: pointer;
+  justify-items: center;
+}
