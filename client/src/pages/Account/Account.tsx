@@ -13,6 +13,9 @@ import FollowerTable from "./Follow/followerTable";
 import FollowingTable from "./Follow/followingTable";
 import {IUser} from "../../interfaces/user";
 import {set} from "mongoose";
+import {IAnalystArticle} from "../../interfaces/analystArticle";
+import {getAnalystArticlesByAuthorId} from "../../services/AnalystArticlesService";
+import AnalystArticleCard from "../../components/analystArticleCard/analystArticleCard";
 
 function Account() {
   const {accountId} = useParams();
@@ -25,6 +28,7 @@ function Account() {
   const [bio, setBio] = React.useState("");
   const [organization, setOrganization] = React.useState("");
   const [role, setRole] = React.useState("");
+  const [articles, setArticles] = React.useState<IAnalystArticle[]>([]);
 
   const handleEditAccount = async () => {
     alert("Updating account");
@@ -123,6 +127,11 @@ function Account() {
           const userFollowings = await getUserFollowees(accountId);
           setFollowings(userFollowings);
           setRole(userResponse.role);
+          if (userResponse.role === "ANALYST") {
+            const articleResponse =
+              await getAnalystArticlesByAuthorId(accountId);
+            setArticles(articleResponse);
+          }
 
           // setBio(userResponse.bio);
           // setOrganization(userResponse.organization);
@@ -139,81 +148,115 @@ function Account() {
       {signedIn && user && user._id === accountId && (
         <div className='page pt-3'>
           <h2>You</h2>
-          <div className='w-25 text-start border account-section'>
-            <label htmlFor='emailSignup' className='mb-2'>
-              Email
-            </label>
+          <div className='d-flex flex-row'>
+            <div className='w-25 text-start border account-section'>
+              <label htmlFor='emailSignup' className='mb-2'>
+                Email
+              </label>
 
-            <input
-              type='email'
-              id='emailSignup'
-              name='emailSignup'
-              className='form-control'
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-            <br />
-            <label htmlFor='Full Name' className='mb-2'>
-              Full Name
-            </label>
+              <input
+                type='email'
+                id='emailSignup'
+                name='emailSignup'
+                className='form-control'
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <br />
+              <label htmlFor='Full Name' className='mb-2'>
+                Full Name
+              </label>
 
-            <input
-              type='text'
-              id='Full Name'
-              name='Full Name'
-              className='form-control'
-              value={fullName}
-              onChange={(event) => setFullname(event.target.value)}
-            />
-            <br />
-            {role === "USER" && (
-              <>
-                <label htmlFor='Bio' className='mb-2'>
-                  Bio
-                </label>
+              <input
+                type='text'
+                id='Full Name'
+                name='Full Name'
+                className='form-control'
+                value={fullName}
+                onChange={(event) => setFullname(event.target.value)}
+              />
+              <br />
+              {role === "USER" && (
+                <>
+                  <label htmlFor='Bio' className='mb-2'>
+                    Bio
+                  </label>
 
-                <input
-                  type='text'
-                  id='Bio'
-                  name='Bio'
-                  className='form-control'
-                  value={bio}
-                  onChange={(event) => setBio(event.target.value)}
-                />
-                <br />
-              </>
-            )}
-            {role === "ANALYST" && (
-              <>
-                <label htmlFor='Organization' className='mb-2'>
-                  Orgnization
-                </label>
-                <input
-                  type='text'
-                  id='Organization'
-                  name='Organization'
-                  className='form-control'
-                  value={organization}
-                  onChange={(event) => setOrganization(event.target.value)}
-                />
-                <br />
-              </>
-            )}
-            <div className='d-flex flex-row'>
-              <button
-                className='btn btn-outline-success me-3'
-                onClick={async () => await handleEditAccount()}
-              >
-                Save Changes
-              </button>
-              <button
-                className='btn btn-outline-danger'
-                onClick={async () => await handleLogOutButton()}
-              >
-                Log Out
-              </button>
+                  <input
+                    type='text'
+                    id='Bio'
+                    name='Bio'
+                    className='form-control'
+                    value={bio}
+                    onChange={(event) => setBio(event.target.value)}
+                  />
+                  <br />
+                </>
+              )}
+              {role === "ANALYST" && (
+                <>
+                  <label htmlFor='Organization' className='mb-2'>
+                    Organization
+                  </label>
+                  <input
+                    type='text'
+                    id='Organization'
+                    name='Organization'
+                    className='form-control'
+                    value={organization}
+                    onChange={(event) => setOrganization(event.target.value)}
+                  />
+                  <br />
+                </>
+              )}
+              <div className='d-flex flex-row'>
+                <button
+                  className='btn btn-outline-success me-3'
+                  onClick={async () => await handleEditAccount()}
+                >
+                  Save Changes
+                </button>
+                <button
+                  className='btn btn-outline-danger'
+                  onClick={async () => await handleLogOutButton()}
+                >
+                  Log Out
+                </button>
+              </div>
+            </div>
+
+            <div className='follower-section border'>
+              <FollowerTable followers={followers} />
+            </div>
+            <div className='following-section border'>
+              <FollowingTable followings={followings} />
             </div>
           </div>
+          {role === "ANALYST" && (
+            <div className='mt-3'>
+              <div className='d-flex flex-row align-items-center'>
+                <h2>Articles</h2>
+                <button
+                  className='btn btn-outline-dark ms-2 h-auto'
+                  onClick={() => navigate("/analyst-article/new")}
+                >
+                  Add Article
+                </button>
+                {/* <h2 className='align-items-center'>
+                Your Articles{" "}
+                <button className='btn btn-outline-dark'>Add Article</button>
+              </h2> */}
+              </div>
+              <div className='d-flex flex-row flex-wrap mt-3'>
+                {articles.map((article, index) => (
+                  <div key={index}>
+                    {" "}
+                    <AnalystArticleCard article={article} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -260,7 +303,7 @@ function Account() {
                 {role === "ANALYST" && (
                   <>
                     {" "}
-                    <label htmlFor='Full Name' className='mb-2'>
+                    <label htmlFor='Organization' className='mb-2'>
                       Organization
                     </label>
                     <div>{organization}</div>{" "}
@@ -277,6 +320,17 @@ function Account() {
               <FollowingTable followings={followings} />
             </div>
           </div>
+          {role === "ANALYST" && (
+            <div className='mt-3'>
+              <h2>Your Articles</h2>
+              {articles.map((article, index) => (
+                <div key={index}>
+                  {" "}
+                  <AnalystArticleCard article={article} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>

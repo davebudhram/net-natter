@@ -9,6 +9,7 @@ const analystArticle = new mongoose.Schema<IAnalystArticleDTO>(
       ref: "User",
       required: true,
     },
+    authorName: {type: String, required: true},
     title: {type: String, required: true},
     text: {type: String, required: true},
     date: {type: Date, required: true},

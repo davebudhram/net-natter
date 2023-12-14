@@ -1,0 +1,10 @@
+.analyst-article-card {
+  border: 1px solid #b31010;
+  border-radius: 5px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  width: 260px;
+  min-width: 260px;
+  height: 260px;
+  cursor: pointer;
+}
