@@ -64,7 +64,7 @@ const getLiveGameData = async (): Promise<IGame[]> => {
 // Get Game Data Based on Date
 const getDateGameData = async (): Promise<IGame[]> => {
   try {
-    const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1))
+    const tomorrowDate = new Date(new Date().setDate(new Date().getDate()))
       .toISOString()
       .split("T")[0];
     const params = {date: tomorrowDate};

@@ -709,28 +709,33 @@ function Game() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const gameResponse = await getIndividualGameByGameId(Number(gameId));
-      setGame(gameResponse);
-      if (gameResponse) {
-        setHomeTeamId(gameResponse.homeTeamId);
-        setAwayTeamId(gameResponse.awayTeamId);
-        const gameStatsResponse = await getGameStatsData(Number(gameId));
-        setHomeTeamStats(
-          gameStatsResponse[0].teamId === gameResponse?.homeTeamId
-            ? gameStatsResponse[0]
-            : gameStatsResponse[1]
-        );
-        setAwayTeamStats(
-          gameStatsResponse[0].teamId === gameResponse?.awayTeamId
-            ? gameStatsResponse[0]
-            : gameStatsResponse[1]
-        );
-        const playerStatsResponse = await getPlayerStatsPerGameData(
-          Number(gameId)
-        );
-        setPlayerStats(playerStatsResponse);
-        const commentsResponse = await getGameCommentsByGame(Number(gameId));
-        setComments(commentsResponse);
+      try {
+        const gameResponse = await getIndividualGameByGameId(Number(gameId));
+        setGame(gameResponse);
+        if (gameResponse) {
+          setHomeTeamId(gameResponse.homeTeamId);
+          setAwayTeamId(gameResponse.awayTeamId);
+          const gameStatsResponse = await getGameStatsData(Number(gameId));
+          console.log(gameStatsResponse);
+          setHomeTeamStats(
+            gameStatsResponse[0].teamId === gameResponse?.homeTeamId
+              ? gameStatsResponse[0]
+              : gameStatsResponse[1]
+          );
+          setAwayTeamStats(
+            gameStatsResponse[0].teamId === gameResponse?.awayTeamId
+              ? gameStatsResponse[0]
+              : gameStatsResponse[1]
+          );
+          const playerStatsResponse = await getPlayerStatsPerGameData(
+            Number(gameId)
+          );
+          setPlayerStats(playerStatsResponse);
+          const commentsResponse = await getGameCommentsByGame(Number(gameId));
+          setComments(commentsResponse);
+        }
+      } catch (error) {
+        console.log("Error fetching game data:", error);
       }
     };
 

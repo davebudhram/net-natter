@@ -2,6 +2,7 @@ import axios from 'axios';
 import { league, season, url, headers } from "./endpointTypes";
 import { ITeam } from '../interfaces/team';
 import { IPlayer } from '../interfaces/player';
+import { getSingleTeamData } from './teamData';
 
 const searchByTeamName = async (teamName: string): Promise<ITeam[]> => {
     const params = { "search": teamName };
@@ -12,20 +13,30 @@ const searchByTeamName = async (teamName: string): Promise<ITeam[]> => {
         });
         const teamRawData = teamRawResponse.data["response"];
          
-        const teams: ITeam[] = teamRawData.map((rawTeam: any) => {
-            return {
-                _id: rawTeam.team.id,
-                name: rawTeam.team.name,
-                code: rawTeam.team.code,
-                conference: rawTeam.conference.name,
-                logo: rawTeam.team.logo,
-                rank: rawTeam.conference.rank,
-                wins: rawTeam.conference.win,
-                losses: rawTeam.conference.loss,
-            };
-        });
-        console.log(teams)
-        return teams;
+        const fetchTeamData = async (rawTeam: any): Promise<ITeam | null> => {
+            if (rawTeam.nbaFranchise) {
+                const singleTeamRawResponse = await getSingleTeamData(rawTeam.id);
+        
+                return {
+                    _id: rawTeam.id,
+                    name: singleTeamRawResponse.name,
+                    code: singleTeamRawResponse.code,
+                    conference: singleTeamRawResponse.conference,
+                    logo: singleTeamRawResponse.logo,
+                    rank: singleTeamRawResponse.rank,
+                    wins: singleTeamRawResponse.wins,
+                    losses: singleTeamRawResponse.losses,
+                };
+            }
+        
+            return null;
+        };
+        
+        const teams: (ITeam | null)[] = await Promise.all(teamRawData.map(fetchTeamData));
+        const filteredTeams: ITeam[] = teams.filter(Boolean) as ITeam[];
+        
+        console.log(filteredTeams);
+        return filteredTeams;
     } catch (error) {
         console.error('Error fetching teams:', error);
         throw error;

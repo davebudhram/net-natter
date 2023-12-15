@@ -1,8 +1,5 @@
-.search-icon-box {
-    background-color: white;
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-left: auto;
+.search-input-box-container {
+    margin-bottom: 40px;
+    margin-right: 40px;
+    padding-top: 40px;
 }

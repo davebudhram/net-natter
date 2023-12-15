@@ -6,6 +6,8 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownButton, InputGroup } from "react-bootstrap";
 import { ITeam } from "../../interfaces/team";
 import { IPlayer } from "../../interfaces/player";
+import { searchByTeamName } from "../../services/SearchServices";
+import TeamCard from "../../components/teamCards/teamCard";
 
 
 function Search() {
@@ -32,24 +34,30 @@ function Search() {
     }
 
     useEffect(() => {
-        setSearchInputText(searchText ? searchText : "");
-        setSearchInputType(searchType ? searchType : "Team");
-    }, [searchText, searchType]);
+        const fetchData = async () => {
+            try {
+                    const searchTeamResults = await searchByTeamName(searchInputText);
+                    console.log(searchTeamResults);
+                    setTeamSearchResults(searchTeamResults);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className='page'>
-            <h1>Search</h1>
-            <p>
-                This is the search page for search type {searchType} and search text{" "}
-                {searchText}
-            </p>
-            <div className=''>
+
+            <div className='search-input-box-container'>
                 <InputGroup>
                 <input
                     type='text'
                     className='form-control'
                     value={searchInputText}
                     onChange={(event) => setSearchInputText(event.target.value)}
+                    onKeyDown={(event) => handleKeyPress(event)}
                 />
                 <DropdownButton
                     title={searchInputType}
@@ -64,6 +72,11 @@ function Search() {
                     <Dropdown.Item eventKey='Player'>Player</Dropdown.Item>
                 </DropdownButton>
                 </InputGroup>
+            </div>
+            <div className='d-flex flex-row flex-wrap'>
+                {teamSearchResults.map((team) => (
+                    <TeamCard team={team} />
+                ))}
             </div>
         </div>
     );

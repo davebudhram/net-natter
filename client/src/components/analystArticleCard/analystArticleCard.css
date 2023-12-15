@@ -7,4 +7,11 @@
   min-width: 260px;
   height: auto;
   cursor: pointer;
+  transition: box-shadow 0.3s ease; 
+  box-shadow: none;
+}
+
+.analyst-article-card:hover {
+  cursor: pointer; 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
