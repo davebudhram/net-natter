@@ -50,7 +50,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({children}) => {
       }
     };
     fetchData();
-  }, [user, signedIn]);
+  }, [signedIn]);
 
   /**
    * Updates the user context
