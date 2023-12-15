@@ -11,13 +11,18 @@ function AnalystArticleCard(props: AnalystArticleCardProps) {
 
   return (
     <div
-      className='analyst-article-card'
+      className='analyst-article-card p-3'
       onClick={() => navigate(`/analyst-article/${article._id}`)}
     >
       <h3>{article.title}</h3>
-      <p>{article.text}</p>
-      <p>{article.authorName}</p>
-      <p>{new Date(article.date).toLocaleDateString()}</p>
+      <div>
+        <strong>Author:</strong> {article.authorName}
+      </div>
+      <div>
+        {" "}
+        <strong>Published:</strong>{" "}
+        {new Date(article.date).toLocaleDateString()}
+      </div>
     </div>
   );
 }

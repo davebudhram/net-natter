@@ -235,17 +235,13 @@ function Account() {
           {role === "ANALYST" && (
             <div className='mt-3'>
               <div className='d-flex flex-row align-items-center'>
-                <h2>Articles</h2>
+                <h2>Your Articles</h2>
                 <button
                   className='btn btn-outline-dark ms-2 h-auto'
                   onClick={() => navigate("/analyst-article/new")}
                 >
                   Add Article
                 </button>
-                {/* <h2 className='align-items-center'>
-                Your Articles{" "}
-                <button className='btn btn-outline-dark'>Add Article</button>
-              </h2> */}
               </div>
               <div className='d-flex flex-row flex-wrap mt-3'>
                 {articles.map((article, index) => (
@@ -320,9 +316,9 @@ function Account() {
               <FollowingTable followings={followings} />
             </div>
           </div>
+          <h2 className='mt-3'>Articles</h2>
           {role === "ANALYST" && (
-            <div className='mt-3'>
-              <h2>Your Articles</h2>
+            <div className='d-flex flex-row flex-wrap mt-3'>
               {articles.map((article, index) => (
                 <div key={index}>
                   {" "}
