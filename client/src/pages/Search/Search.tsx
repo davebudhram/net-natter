@@ -36,7 +36,7 @@ function Search() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                    const searchTeamResults = await searchByTeamName(searchInputText);
+                    const searchTeamResults = await searchByTeamName(searchText ? searchText : "");
                     console.log(searchTeamResults);
                     setTeamSearchResults(searchTeamResults);
             } catch (error) {
@@ -45,7 +45,7 @@ function Search() {
         };
 
         fetchData();
-    }, []);
+    }, [searchType, searchText]);
 
     return (
         <div className='page'>
