@@ -29,16 +29,21 @@ function Team() {
                 console.log("No team");
                 return;
             }
-            const teamData = await getSingleTeamData(parseInt(teamId));
-            const gamesData = await getIndividualGameTeamData(parseInt(teamId));
-            setGames(gamesData);
-            setTeam(teamData);
+            console.log(teamId);
+            try {
+                const teamData = await getSingleTeamData(parseInt(teamId));
+                const gamesData = await getIndividualGameTeamData(parseInt(teamId));
+                setGames(gamesData);
+                setTeam(teamData);
 
-            if (teamData) {
-                const playersData = await getPlayersData(parseInt(teamId), teamData.code.toLowerCase());
-                const teamStatsData = await getTeamStatsData(parseInt(teamId));
-                setPlayers(playersData);
-                setTeamStats(teamStatsData);
+                if (teamData) {
+                    const playersData = await getPlayersData(parseInt(teamId), teamData.code.toLowerCase());
+                    const teamStatsData = await getTeamStatsData(parseInt(teamId));
+                    setPlayers(playersData);
+                    setTeamStats(teamStatsData);
+                }
+            } catch (error) {
+                console.log("Error: ", error);
             }
         };
         

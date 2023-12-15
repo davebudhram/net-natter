@@ -13,12 +13,12 @@ export interface IGame {
   homeLogo: string;
   awayLogo: string;
   quarter: number;
-  status: "Scheduled" | "live" | "Finished";
+  status: "Scheduled" | "In Play" | "Finished";
   clock: string;
 }
 
 export enum Status {
   UPCOMING = "Not Started",
-  LIVE = "live",
+  LIVE = "In Play",
   FINISHED = "Finished",
 }

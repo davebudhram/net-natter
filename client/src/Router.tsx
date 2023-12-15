@@ -8,7 +8,7 @@ import Game from "./pages/Game";
 import Player from "./pages/Player";
 import Team from "./pages/Team/Team";
 import Article from "./pages/Article";
-import Search from "./pages/Search";
+import Search from "./pages/Search/Search";
 import Welcome from "./pages/Welcome/Welcome";
 import AnalystArticle from "./pages/Analyst Article/AnalystArticle";
 

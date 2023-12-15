@@ -1,3 +1,8 @@
 .home-page-header {
   font-size: 50px;
 }
+
+.home-button {
+  background: #990011;
+  margin-right: 120px;
+}

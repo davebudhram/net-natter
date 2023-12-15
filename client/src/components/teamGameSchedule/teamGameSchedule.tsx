@@ -1,6 +1,7 @@
 import React from "react";
 import "./teamGameSchedule.css";
 import { IGame } from "../../interfaces/game";
+import { useNavigate } from "react-router-dom";
 
 
 export type TeamGameScheduleProps = {
@@ -10,8 +11,19 @@ export type TeamGameScheduleProps = {
 
 function TeamGameSchedule(props: TeamGameScheduleProps) { 
     const { games, teamId } = props;
+    const navigate = useNavigate();
     const pastGames = games.filter((game) => game.status === "Finished").reverse();
     const upcomingGame = games.find((game) => game.status === "Scheduled");
+
+    const handleGameClick = (gameId: number) => {
+        try {
+          navigate(`/game/${gameId}`);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+
     return (
         <div className='team-table-container flex-wrap'>
             <div className="table-responsive">
@@ -27,7 +39,7 @@ function TeamGameSchedule(props: TeamGameScheduleProps) {
                     {upcomingGame && (
                         <tr key={upcomingGame._id}>
                             <td>
-                                <div className="team-table-game-container">
+                                <div className="team-table-upcoming-game-container">
                                     <div className="mx-1">
                                     {upcomingGame.homeTeamId === teamId ? (
                                         <div>
@@ -51,8 +63,8 @@ function TeamGameSchedule(props: TeamGameScheduleProps) {
                     )}
                     {pastGames.map((game) => (
                     <tr key={game._id}>
-                        <td>
-                            <div className="team-table-game-container">
+                        <td className="team-table-past-game-item">
+                            <div className="team-table-past-game-container" onClick={() => handleGameClick(game._id)}>
                                 <div className="mx-1">
                                 {game.homeTeamId === teamId ? (
                                     <div>
