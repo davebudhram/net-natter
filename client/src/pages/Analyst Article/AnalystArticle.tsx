@@ -5,6 +5,7 @@ import {useUser} from "../../contexts/UserContext";
 import {useNavigate} from "react-router-dom";
 import {
   createAnalystArticle,
+  deleteAnalystArticle,
   getAnalystArticleById,
   updateAnalystArticle,
 } from "../../services/AnalystArticlesService";
@@ -21,6 +22,7 @@ function AnalystArticle(props: AnalystArticleProps) {
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
+  const [authorName, setAuthorName] = useState<string>("");
   const [authorId, setAuthorId] = useState<string>("");
 
   const handleAddAnalystArticleButton = async () => {
@@ -49,12 +51,36 @@ function AnalystArticle(props: AnalystArticleProps) {
       navigate("/home");
       return;
     }
+    if (user._id !== authorId) {
+      alert("You can only edit your own articles");
+      return;
+    }
     setMode("edit");
+  };
+
+  const handleDeleteAnalystArticleButton = async () => {
+    if (!user || user.role === "USER") {
+      alert("You must be an analyst or admin to delete an article");
+      navigate("/home");
+      return;
+    }
+    if (user.role !== "ADMIN") {
+      if (user._id !== authorId) {
+        alert("You can only edit your own articles");
+        return;
+      }
+    }
+    try {
+      navigate("/account/" + user._id);
+      await deleteAnalystArticle(analystArticleId ? analystArticleId : "");
+    } catch (error) {
+      alert("Error deleting article");
+    }
   };
 
   const handleSaveAnalystArticleButton = async () => {
     if (!user || user.role !== "ANALYST") {
-      alert("You must be an analyst to create an article");
+      alert("You must be an analyst to save an article");
       navigate("/home");
       return;
     }
@@ -64,11 +90,16 @@ function AnalystArticle(props: AnalystArticleProps) {
         navigate("/home");
         return;
       }
+      if (user._id !== authorId) {
+        alert("You can only edit your own articles");
+        return;
+      }
       const article = await updateAnalystArticle(analystArticleId, {
         title: title,
         text: text,
       });
       navigate(`/analyst-article/${article._id}`);
+      setMode("view");
     } catch (error) {
       alert("Error updating article");
     }
@@ -87,6 +118,7 @@ function AnalystArticle(props: AnalystArticleProps) {
         setText(article.text);
         setDate(new Date(article.date));
         setAuthorId(article.authorId);
+        setAuthorName(article.authorName);
       } catch (error) {
         alert("Error finding article");
         navigate("/home");
@@ -114,16 +146,25 @@ function AnalystArticle(props: AnalystArticleProps) {
       {mode === "view" && (
         <div className='page pt-3 w-75'>
           <h1>{title}</h1>
-          <p>{date.toLocaleDateString()}</p>
+          <div><strong>By:</strong> {authorName}</div>
+          <p> <strong> Published: </strong> {date.toLocaleDateString()}</p>
           <hr />
           <p>{text}</p>
           {user && user.role === "ANALYST" && (
             <button
-              className='btn btn-outline-dark'
+              className='btn btn-outline-dark me-3'
               onClick={handleEditAnalystArticleButton}
             >
               Edit Article
             </button>
+          )}
+          {user && user.role !== "USER" && (
+            <button
+            className='btn btn-outline-danger'
+            onClick={handleDeleteAnalystArticleButton}
+          >
+            Delete Article
+          </button>
           )}
         </div>
       )}
@@ -142,7 +183,7 @@ function AnalystArticle(props: AnalystArticleProps) {
           <label htmlFor='text'>Text</label>
           <textarea
             id='text'
-            className='form-control'
+            className='form-control w-75'
             value={text}
             onChange={(e) => setText(e.target.value)}
           />

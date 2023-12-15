@@ -15,7 +15,7 @@
   margin-left: 100px;
   color: white;
   font-size: 50px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   cursor: pointer;
   text-wrap: nowrap;
 }
