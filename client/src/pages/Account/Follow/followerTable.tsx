@@ -13,7 +13,7 @@ function FollowerTable(props: FollowerTableProps) {
 
   return (
     <div>
-      <h2>Follower Table</h2>
+      <h2>Followers</h2>
       {followers.map((follower, index) => (
         <div key={index}>
           <FollowCard user={follower} />

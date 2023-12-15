@@ -50,9 +50,9 @@ function GameTeamStats(props: GameTeamStatsProps) {
           </div>
         </div>
         <div className='d-flex justify-content-between'>
-          <div>{awayTeamStats.fgp} </div>
+          <div>{(awayTeamStats.fgm / awayTeamStats.fga * 100).toFixed(1)} </div>
           <div>Field Goals %</div>
-          <div>{homeTeamStats.fgp} </div>
+          <div>{(homeTeamStats.fgm / awayTeamStats.fga * 100).toFixed(1)} </div>
         </div>
         <br />
         <div className='d-flex justify-content-between'>

@@ -31,7 +31,6 @@ function Account() {
   const [articles, setArticles] = React.useState<IAnalystArticle[]>([]);
 
   const handleEditAccount = async () => {
-    alert("Updating account");
     if (signedIn) {
       if (email === "" || fullName === "") {
         alert("Please fill out all fields");
@@ -149,7 +148,7 @@ function Account() {
         <div className='page pt-3'>
           <h2>You</h2>
           <div className='d-flex flex-row'>
-            <div className='w-25 text-start border account-section'>
+            <div className='w-25 text-start account-section'>
               <label htmlFor='emailSignup' className='mb-2'>
                 Email
               </label>
@@ -225,10 +224,10 @@ function Account() {
               </div>
             </div>
 
-            <div className='follower-section border'>
+            <div className='follower-section'>
               <FollowerTable followers={followers} />
             </div>
-            <div className='following-section border'>
+            <div className='following-section'>
               <FollowingTable followings={followings} />
             </div>
           </div>
@@ -286,7 +285,7 @@ function Account() {
           </h2>
           <div className='d-flex flex-row'>
             <div>
-              <div className='border account-section'>
+              <div className='account-section'>
                 {role === "USER" && (
                   <>
                     {" "}
@@ -309,15 +308,16 @@ function Account() {
               </div>
             </div>
 
-            <div className='follower-section border'>
+            <div className='follower-section'>
               <FollowerTable followers={followers} />
             </div>
-            <div className='following-section border'>
+            <div className='following-section'>
               <FollowingTable followings={followings} />
             </div>
           </div>
-          <h2 className='mt-3'>Articles</h2>
           {role === "ANALYST" && (
+            <>
+            <h2 className='mt-3'>Articles</h2>
             <div className='d-flex flex-row flex-wrap mt-3'>
               {articles.map((article, index) => (
                 <div key={index}>
@@ -326,6 +326,7 @@ function Account() {
                 </div>
               ))}
             </div>
+            </>
           )}
         </div>
       )}

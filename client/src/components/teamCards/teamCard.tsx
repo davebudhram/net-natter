@@ -41,7 +41,7 @@ function TeamCard(props: TeamCardProps) {
         &nbsp;
         <div className='team-name-text'>{team.name}</div>
         &nbsp; <span> - </span> &nbsp;
-        <div className="team-name-text text-danger">{team.code}</div>
+        <div className="team-name-text">{team.code}</div>
       </div>
     </div>
   );

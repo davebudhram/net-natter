@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser, faTrash} from "@fortawesome/free-solid-svg-icons";
 import "./comment.css";
 import {useUser} from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 interface CommentProps {
   comment: IGameComment;
@@ -13,11 +14,20 @@ interface CommentProps {
 
 function Comment(props: CommentProps) {
   const {comment, handleDeleteComment} = props;
+  const navigate = useNavigate();
   library.add(faUser);
+
+  const handleProfileClick = () => {
+    try {
+      navigate(`/account/${comment.userId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className='comment d-flex align-items-center border pt-2 pb-1'>
-      <div className='profile-container '>
+      <div className='profile-container' onClick={handleProfileClick}>
         <FontAwesomeIcon icon={faUser} className='' />
       </div>
       <div>

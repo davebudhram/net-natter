@@ -50,7 +50,7 @@ function Search() {
     return (
         <div className='page'>
 
-            <div className='search-input-box-container'>
+            <div className='search-input-box-container w-75'>
                 <InputGroup>
                 <input
                     type='text'

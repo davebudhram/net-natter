@@ -60,6 +60,7 @@ function LiveGameCard(props: GameCardProps) {
           </div>
           <div className='game-card-team-code-row'>
             <div className='game-card-team-code'>{game.awayTeamCode}</div>
+            <div className="game-card-at"> @ </div>
             <div className='game-card-team-code'>{game.homeTeamCode}</div>
           </div>
           {(game.status === "Finished" || game.status === "In Play") && (
